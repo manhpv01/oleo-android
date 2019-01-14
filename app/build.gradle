@@ -1,33 +1,148 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-platform-android'
+apply plugin: 'kotlin-kapt'
+
+apply from: '../autodimension.gradle'
+
+def APP_ID = "com.framgia.oleo"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.framgia.oleo"
-        minSdkVersion 21
-        targetSdkVersion 28
+        applicationId "${APP_ID}"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
     }
+
+    flavorDimensions "stage", "mode"
+
+    productFlavors {
+        dev {
+            dimension "stage"
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders = [applicationName: "@string/app_name"]
+            applicationVariants.all { variant -> appendVersionNameVersionCode(variant) }
+            versionNameSuffix "-dev"
+        }
+
+        prod {
+            dimension "mode"
+            manifestPlaceholders = [applicationName: "@string/app_name"]
+            applicationVariants.all { variant -> appendVersionNameVersionCode(variant) }
+        }
+    }
+
     buildTypes {
+
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '.debug'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+    kapt {
+        useBuildCache = true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:' + rootProject.supportAppCompatVersion
+
+    // Design
+    implementation 'androidx.cardview:cardview:' + rootProject.recyclerViewVersion
+    implementation 'com.google.android.material:material:' + rootProject.materialVersion
+    implementation 'androidx.recyclerview:recyclerview:' + rootProject.recyclerViewVersion
+    implementation 'androidx.annotation:annotation:' + rootProject.annotationVersion
+    implementation 'androidx.constraintlayout:constraintlayout:' + rootProject.constraintLayoutVersion
+
+    //Navigation
+    implementation 'android.arch.navigation:navigation-fragment:' + rootProject.navigationVersion
+    implementation 'android.arch.navigation:navigation-ui:' + rootProject.navigationVersion
+
+    // RoomDatabase
+    implementation 'androidx.room:room-rxjava2:' + rootProject.roomDatabaseVersion
+    implementation 'androidx.room:room-runtime:' + rootProject.roomDatabaseVersion
+    kapt 'androidx.room:room-compiler:' + rootProject.roomDatabaseVersion
+
+    // Retrofit - OkHttp
+    implementation "com.squareup.retrofit2:retrofit:" + rootProject.retrofitVersion
+    implementation "com.squareup.retrofit2:converter-gson:" + rootProject.retrofitVersion
+    implementation "com.squareup.retrofit2:adapter-rxjava2:" + rootProject.retrofitVersion
+    implementation "com.squareup.okhttp3:okhttp:" + rootProject.okhttpVersion
+    implementation "com.squareup.okhttp3:logging-interceptor:" + rootProject.okhttpVersion
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxkotlin:" + rootProject.rxKotlinVersion
+    implementation "io.reactivex.rxjava2:rxandroid:" + rootProject.rxAndroidVersion
+    implementation 'io.reactivex.rxjava2:rxjava:' + rootProject.rxJavaVersion
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:" + rootProject.lifecycleVersion
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:" + rootProject.lifecycleVersion
+
+    // Dagger
+    implementation "com.google.dagger:dagger:" + rootProject.daggerVersion
+    implementation "com.google.dagger:dagger-android:" + rootProject.daggerAndroidVersion
+    kapt "com.google.dagger:dagger-compiler:" + rootProject.daggerCompilerVersion
+    kapt "com.google.dagger:dagger-android-processor:" + rootProject.daggerProcessorVersion
+
+    // Other
+    implementation "com.github.bumptech.glide:glide:" + rootProject.glideVersion
+    kapt 'androidx.databinding:databinding-compiler:' + rootProject.bindingCompilerVersion
+
+    // Test
+    testImplementation 'junit:junit:' + rootProject.junitVersion
+    androidTestImplementation 'com.android.support.test:runner:' + rootProject.testRunnerVersion
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + rootProject.testEspressoVersion
+}
+
+def appendVersionNameVersionCode(variant) {
+    variant.outputs.all { output ->
+        def applicationId = variant.mergedFlavor.applicationId +
+                (variant.buildType.applicationIdSuffix ==
+                        null ? "" : variant.buildType.applicationIdSuffix)
+        if (output.zipAlign) {
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def time = new Date().
+                        format("dd-MM-yyyy", TimeZone.getTimeZone("UTC"))
+                def fileName = outputFile.name.replace("app",
+                        "${applicationId}_v${variant.versionName}_${variant.versionCode}_${time}")
+                outputFileName = fileName
+            }
+        }
+    }
 }
