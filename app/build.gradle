@@ -30,14 +30,12 @@ android {
             dimension "stage"
             applicationIdSuffix = ".dev"
             manifestPlaceholders = [applicationName: "@string/app_name"]
-            applicationVariants.all { variant -> appendVersionNameVersionCode(variant) }
             versionNameSuffix "-dev"
         }
 
         prod {
             dimension "mode"
             manifestPlaceholders = [applicationName: "@string/app_name"]
-            applicationVariants.all { variant -> appendVersionNameVersionCode(variant) }
         }
     }
 
@@ -116,33 +114,21 @@ dependencies {
     // Dagger
     implementation "com.google.dagger:dagger:" + rootProject.daggerVersion
     implementation "com.google.dagger:dagger-android:" + rootProject.daggerAndroidVersion
+    implementation "com.google.dagger:dagger-android-support:" + rootProject.daggerAndroidVersion
     kapt "com.google.dagger:dagger-compiler:" + rootProject.daggerCompilerVersion
     kapt "com.google.dagger:dagger-android-processor:" + rootProject.daggerProcessorVersion
 
+    // Leak Canary
+    implementation 'com.squareup.leakcanary:leakcanary-android:' + rootProject.leakCanaryVersion
+    implementation 'com.squareup.leakcanary:leakcanary-android:' + rootProject.leakCanaryVersion
+
     // Other
     implementation "com.github.bumptech.glide:glide:" + rootProject.glideVersion
+    kapt "com.github.bumptech.glide:compiler:" + rootProject.glideVersion
     kapt 'androidx.databinding:databinding-compiler:' + rootProject.bindingCompilerVersion
 
     // Test
     testImplementation 'junit:junit:' + rootProject.junitVersion
     androidTestImplementation 'com.android.support.test:runner:' + rootProject.testRunnerVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + rootProject.testEspressoVersion
-}
-
-def appendVersionNameVersionCode(variant) {
-    variant.outputs.all { output ->
-        def applicationId = variant.mergedFlavor.applicationId +
-                (variant.buildType.applicationIdSuffix ==
-                        null ? "" : variant.buildType.applicationIdSuffix)
-        if (output.zipAlign) {
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def time = new Date().
-                        format("dd-MM-yyyy", TimeZone.getTimeZone("UTC"))
-                def fileName = outputFile.name.replace("app",
-                        "${applicationId}_v${variant.versionName}_${variant.versionCode}_${time}")
-                outputFileName = fileName
-            }
-        }
-    }
 }
