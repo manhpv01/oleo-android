@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oleo</string>
+
+    // String resource
+    <string name="click_again">Nhấn một lần nữa để thoát</string>
+</resources>

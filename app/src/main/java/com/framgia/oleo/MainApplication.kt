@@ -19,7 +19,7 @@ class MainApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        sInstance = this
         AppInjector.init(this)
         configLeakCanary()
     }
@@ -46,6 +46,6 @@ class MainApplication : Application(), HasActivityInjector {
     }
 
     companion object {
-        lateinit var instance: MainApplication
+        lateinit var sInstance: MainApplication
     }
 }
