@@ -3,4 +3,13 @@
 
     // String resource
     <string name="click_again">Please click again to exit</string>
+    <string name="login">Login</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="do_not_have_account">Don\'t have an account? Sign up.</string>
+    <string name="phone_number">Phone number</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or">OR</string>
+    <string name="image_description">Image Description</string>
 </resources>
