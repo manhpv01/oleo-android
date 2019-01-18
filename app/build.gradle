@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-platform-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 apply from: '../autodimension.gradle'
 
@@ -121,6 +122,9 @@ dependencies {
     // Leak Canary
     implementation 'com.squareup.leakcanary:leakcanary-android:' + rootProject.leakCanaryVersion
     implementation 'com.squareup.leakcanary:leakcanary-android:' + rootProject.leakCanaryVersion
+
+    //Google
+    implementation 'com.google.android.gms:play-services-auth:' + rootProject.googleVersion
 
     // Other
     implementation "com.github.bumptech.glide:glide:" + rootProject.glideVersion
