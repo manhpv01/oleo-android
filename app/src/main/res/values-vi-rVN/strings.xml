@@ -4,4 +4,13 @@
 
     // String resource
     <string name="click_again">Nhấn một lần nữa để thoát</string>
+    <string name="login">Đăng Nhập</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="do_not_have_account">Không có tải khoản? Đăng kí.</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="password">Mật Khẩu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="or">Hoặc</string>
+    <string name="image_description">Mô tả hình ảnh</string>
 </resources>
