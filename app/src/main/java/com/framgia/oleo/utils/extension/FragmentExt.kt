@@ -1,7 +1,5 @@
 package com.framgia.oleo.utils.extension
 
-import android.content.Intent
-import android.net.Uri
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -41,13 +39,6 @@ fun Fragment.goBackFragment(): Boolean {
         return isShowPreviousPage
     }
     return false
-}
-
-fun Fragment.startActivityImplicit(uriIntent: String, data: String) {
-    val intent = Intent(uriIntent)
-    intent.data = Uri.parse("smsto:")
-    intent.putExtra("sms_body", data)
-    startActivity(intent)
 }
 
 /**

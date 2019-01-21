@@ -2,6 +2,9 @@ package com.framgia.oleo.utils.di.module
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
+import com.framgia.oleo.data.source.local.dao.UserDatabase
+import com.framgia.oleo.data.source.local.dao.UserDatabase.Companion.DATABASE_NAME
 import com.framgia.oleo.data.source.remote.api.middleware.BooleanAdapter
 import com.framgia.oleo.data.source.remote.api.middleware.DoubleAdapter
 import com.framgia.oleo.data.source.remote.api.middleware.IntegerAdapter
@@ -26,6 +29,14 @@ class AppModule {
     @Singleton
     fun provideBaseSchedulerProvider(): BaseScheduleProvider =
         SchedulerProvider.instance
+
+    @Provides
+    @Singleton
+    fun provideUserLocalRepository(application: Application): UserDatabase {
+        return Room.databaseBuilder(application.applicationContext, UserDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration().allowMainThreadQueries()
+            .build()
+    }
 
     @Singleton
     @Provides

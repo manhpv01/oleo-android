@@ -8,13 +8,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.facebook.GraphRequest
 import com.facebook.login.LoginResult
 import com.framgia.oleo.base.BaseViewModel
+import com.framgia.oleo.data.source.UserRepository
+import com.framgia.oleo.data.source.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val application: Application) : BaseViewModel() {
+class LoginViewModel @Inject constructor(
+    private val application: Application,
+    private val userRepository: UserRepository
+) : BaseViewModel() {
 
     fun checkLastLogin(): Boolean {
         return GoogleSignIn.getLastSignedInAccount(application) != null
@@ -24,15 +29,28 @@ class LoginViewModel @Inject constructor(private val application: Application) :
         try {
             val account = completedTask.getResult(ApiException::class.java)
             //Xử lý lưu vào room database
+            userRepository.insertUser(
+                User(
+                    account?.id.toString(),
+                    account?.displayName.toString(),
+                    account?.email.toString()
+                )
+            )
         } catch (e: ApiException) {
             Toast.makeText(application, e.message, Toast.LENGTH_SHORT).show()
         }
-
     }
 
     fun receiveDataUserFacebook(result: LoginResult) {
         val request: GraphRequest = GraphRequest.newMeRequest(result.accessToken) { jsonObject, response ->
             //Handle get value by key
+            userRepository.insertUser(
+                User(
+                    jsonObject.getString(ID_KEY),
+                    jsonObject.getString(NAME_KEY),
+                    jsonObject.getString(EMAIL_KEY)
+                )
+            )
         }
         //Request Graph API
         val bundle = Bundle()
@@ -44,6 +62,9 @@ class LoginViewModel @Inject constructor(private val application: Application) :
     companion object {
         const val BUNDLE_FIELDS = "fields"
         const val BUNDLE_REQUEST_KEY = "id,name,email"
+        const val ID_KEY = "id"
+        const val NAME_KEY = "name"
+        const val EMAIL_KEY = "email"
         fun create(fragment: Fragment, factory: ViewModelProvider.Factory): LoginViewModel =
             ViewModelProvider(fragment, factory).get(LoginViewModel::class.java)
     }
