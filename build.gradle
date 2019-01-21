@@ -65,6 +65,8 @@ ext {
     bindingCompilerVersion = '3.3.0'
     leakCanaryVersion = '1.5.4'
 
+    facebookSdkVersion = '4.39.0'
+
     junitVersion = '4.12'
     testRunnerVersion = '1.0.2'
     testEspressoVersion = '3.0.2'

@@ -17,9 +17,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var currentFragment: Fragment
-
     private var isDoubleTapBack = false
-
     private val loginFragment = LoginFragment.newInstance()
 
     override fun onCreateView(savedInstanceState: Bundle?) {
@@ -29,7 +27,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setUpView() {
-
     }
 
     override fun bindView() {
