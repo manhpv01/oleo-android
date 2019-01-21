@@ -35,3 +35,4 @@ build
 .project
 local.properties
 /gradlew.bat
+/app/google-services.json

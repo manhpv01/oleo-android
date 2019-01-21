@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseActivity
 import com.framgia.oleo.databinding.ActivityMainBinding
-import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.screen.login.LoginFragment
 import com.framgia.oleo.utils.Constant
 import com.framgia.oleo.utils.extension.goBackFragment
@@ -21,7 +20,6 @@ class MainActivity : BaseActivity() {
 
     private var isDoubleTapBack = false
 
-    private val homeFragment = HomeFragment.newInstance()
     private val loginFragment = LoginFragment.newInstance()
 
     override fun onCreateView(savedInstanceState: Bundle?) {
