@@ -2,6 +2,8 @@ package com.framgia.oleo.screen.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +18,18 @@ import com.framgia.oleo.base.BaseFragment
 import com.framgia.oleo.databinding.FragmentLoginBinding
 import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.utils.extension.replaceFragment
+import com.framgia.oleo.utils.extension.showSnackBar
+import com.framgia.oleo.utils.extension.validInputPassword
+import com.framgia.oleo.utils.extension.validInputPhoneNumber
 import com.framgia.oleo.utils.liveData.autoCleared
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
+import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
+
 
 class LoginFragment : BaseFragment(), View.OnClickListener {
 
@@ -30,6 +38,8 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
     private lateinit var callBackManager: CallbackManager
     private lateinit var googleSignInOptions: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
+    private var validPhone = false
+    private var validPassword = false
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel = LoginViewModel.create(this, viewModelFactory)
@@ -41,9 +51,13 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
 
     override fun setUpView() {
         callBackManager = CallbackManager.Factory.create()
-        binding.textViewLoginGG.setOnClickListener(this)
+        addEditTextListener()
         initGoogle()
+        textLayoutPassWord.isPasswordVisibilityToggleEnabled = true
+
+        buttonLogin.setOnClickListener(this)
         textViewLoginFB.setOnClickListener(this)
+        textViewLoginGG.setOnClickListener(this)
     }
 
     override fun bindView() {
@@ -53,13 +67,36 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.textViewLoginFB -> {
-                buttonLoginFB.performClick()
-            }
-            R.id.textViewLoginGG -> {
-                signInWithGoogle()
-            }
+            R.id.textViewLoginFB -> buttonLoginFB.performClick()
+            R.id.textViewLoginGG -> signInWithGoogle()
+            R.id.buttonLogin -> if (validPassword && validPhone) replaceFragment(
+                R.id.containerMain,
+                HomeFragment.newInstance()
+            )
         }
+    }
+
+    private fun addEditTextListener() {
+        editTextPhoneNumber.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validPhone = validInputPhoneNumber(activity!!, s.toString(), textLayoutPhoneNumber)
+                if (s.isNullOrBlank()) textLayoutPhoneNumber.error = null
+            }
+        })
+        editTextPassword.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validPassword = validInputPassword(activity!!, s.toString(), textLayoutPassWord)
+                if (s.isNullOrBlank()) textLayoutPassWord.error = null
+            }
+        })
     }
 
     private fun signInWithFacebook() {
@@ -86,12 +123,15 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         callBackManager.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_REQUEST) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            viewModel.receiveDataUserGoogle(task)
-            replaceFragment(R.id.containerMain, HomeFragment.newInstance())
-            viewModel.receiveDataUserGoogle(task)
-            if (task.exception == null) {
-                replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+            try {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                viewModel.receiveDataUserGoogle(task)
+                if (task.exception == null) replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+            } catch (e: ApiException) {
+                when (e.statusCode) {
+                    GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> view!!.showSnackBar(GOOGLE_SIGN_CANCELLED)
+                    GoogleSignInStatusCodes.SIGN_IN_FAILED -> view!!.showSnackBar(GOOGLE_SIGN_FAILED)
+                }
             }
         }
     }
@@ -120,6 +160,8 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         const val REQUEST_NULL = "Data Null"
         const val PUBLIC_PROFILE = "public_profile"
         const val EMAIL = "email"
+        const val GOOGLE_SIGN_CANCELLED = "Sign Cancelled"
+        const val GOOGLE_SIGN_FAILED = "Sign Failed"
 
         fun newInstance() = LoginFragment().apply {
             val bundle = Bundle()

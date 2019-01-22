@@ -2,7 +2,6 @@ package com.framgia.oleo.screen.login
 
 import android.app.Application
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.GraphRequest
@@ -26,19 +25,15 @@ class LoginViewModel @Inject constructor(
     }
 
     fun receiveDataUserGoogle(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            //Xử lý lưu vào room database
-            userRepository.insertUser(
-                User(
-                    account?.id.toString(),
-                    account?.displayName.toString(),
-                    account?.email.toString()
-                )
+        val account = completedTask.getResult(ApiException::class.java)
+        //Xử lý lưu vào room database
+        userRepository.insertUser(
+            User(
+                account?.id.toString(),
+                account?.displayName.toString(),
+                account?.email.toString()
             )
-        } catch (e: ApiException) {
-            Toast.makeText(application, e.message, Toast.LENGTH_SHORT).show()
-        }
+        )
     }
 
     fun receiveDataUserFacebook(result: LoginResult) {

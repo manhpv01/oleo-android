@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/login_bg"
+            android:focusableInTouchMode="true"
     >
         <ImageView
                 android:src="@drawable/logo"
@@ -35,43 +36,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.35"
+                app:layout_constraintGuide_percent="0.3"
         />
-        <EditText
-                android:id="@+id/editTextUserName"
-                android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textLayoutPhoneNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginStart="@dimen/dp_40"
+            android:fontFamily="serif"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/colorEditText"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/guidelineLogo"
+            app:layout_constraintBottom_toTopOf="@id/textLayoutPassWord"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <EditText
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
-                android:layout_marginBottom="@dimen/dp_12"
-                android:layout_marginEnd="@dimen/dp_40"
-                android:layout_marginStart="@dimen/dp_40"
                 android:backgroundTint="@color/colorEditText"
-                android:fontFamily="serif"
-                android:hint="@string/phone_number"
-                android:inputType="text"
-                android:textColorHint="@color/colorEditText"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:textSize="@dimen/sp_14"
-                app:layout_constraintBottom_toTopOf="@id/editTextPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-        />
-        <EditText
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textLayoutPassWord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_28"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:fontFamily="serif"
+            android:hint="@string/password"
+            android:textColorHint="@color/colorEditText"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/textLayoutPhoneNumber"
+            app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+            <EditText
                 android:id="@+id/editTextPassword"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
-                android:layout_marginBottom="@dimen/dp_28"
-                android:layout_marginEnd="@dimen/dp_40"
-                android:layout_marginStart="@dimen/dp_40"
-                android:layout_marginTop="@dimen/dp_10"
                 android:backgroundTint="@color/colorEditText"
-                android:fontFamily="serif"
-                android:hint="@string/password"
                 android:inputType="textPassword"
-                android:textColorHint="@color/colorEditText"
-                android:textSize="@dimen/sp_14"
-                app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-        />
+                android:maxLength="20"
+                android:textSize="@dimen/sp_14"/>
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
                 android:id="@+id/buttonLogin"
                 android:layout_width="0dp"
@@ -85,6 +102,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorDefault"
                 android:textSize="@dimen/sp_16"
+                app:layout_constraintTop_toBottomOf="@id/textLayoutPassWord"
                 app:layout_constraintBottom_toTopOf="@+id/textViewForgotPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,6 +116,7 @@
                 android:text="@string/forgot_password"
                 android:textSize="@dimen/sp_12"
                 android:textStyle="italic"
+                app:layout_constraintTop_toBottomOf="@id/buttonLogin"
                 app:layout_constraintBottom_toTopOf="@+id/guidelineLoginForm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.65"
+                app:layout_constraintGuide_percent="0.7"
         />
         <View
                 android:id="@+id/viewLine"
@@ -116,8 +135,8 @@
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginTop="@dimen/dp_40"
                 android:background="@color/colorGrey400"
-                app:layout_constraintEnd_toEndOf="@id/editTextPassword"
-                app:layout_constraintStart_toStartOf="@id/editTextPassword"
+                app:layout_constraintEnd_toEndOf="@id/buttonLogin"
+                app:layout_constraintStart_toStartOf="@id/buttonLogin"
                 app:layout_constraintTop_toBottomOf="@id/guidelineLoginForm"
                 tools:ignore="MissingConstraints"
         />
