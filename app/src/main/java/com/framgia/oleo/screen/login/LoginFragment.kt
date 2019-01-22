@@ -17,6 +17,8 @@ import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
 import com.framgia.oleo.databinding.FragmentLoginBinding
 import com.framgia.oleo.screen.home.HomeFragment
+import com.framgia.oleo.utils.extension.isCheckClickableButtonClick
+import com.framgia.oleo.utils.extension.isCheckMultiClick
 import com.framgia.oleo.utils.extension.replaceFragment
 import com.framgia.oleo.utils.extension.showSnackBar
 import com.framgia.oleo.utils.extension.validInputPassword
@@ -27,21 +29,32 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
-import kotlinx.android.synthetic.main.fragment_login.*
-import java.util.*
-
+import kotlinx.android.synthetic.main.fragment_login.buttonLogin
+import kotlinx.android.synthetic.main.fragment_login.buttonLoginFB
+import kotlinx.android.synthetic.main.fragment_login.editTextPassword
+import kotlinx.android.synthetic.main.fragment_login.editTextPhoneNumber
+import kotlinx.android.synthetic.main.fragment_login.textLayoutPassWord
+import kotlinx.android.synthetic.main.fragment_login.textLayoutPhoneNumber
+import kotlinx.android.synthetic.main.fragment_login.textViewLoginFB
+import kotlinx.android.synthetic.main.fragment_login.textViewLoginGG
+import java.util.Arrays
 
 class LoginFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var viewModel: LoginViewModel
-    private var binding by autoCleared<FragmentLoginBinding>()
     private lateinit var callBackManager: CallbackManager
     private lateinit var googleSignInOptions: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var viewModel: LoginViewModel
+    private var binding by autoCleared<FragmentLoginBinding>()
     private var validPhone = false
     private var validPassword = false
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun createView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         viewModel = LoginViewModel.create(this, viewModelFactory)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         binding.viewModel = viewModel
@@ -58,6 +71,7 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         buttonLogin.setOnClickListener(this)
         textViewLoginFB.setOnClickListener(this)
         textViewLoginGG.setOnClickListener(this)
+        buttonLogin.setOnClickListener(this)
     }
 
     override fun bindView() {
@@ -67,12 +81,15 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.textViewLoginFB -> buttonLoginFB.performClick()
-            R.id.textViewLoginGG -> signInWithGoogle()
-            R.id.buttonLogin -> if (validPassword && validPhone) replaceFragment(
-                R.id.containerMain,
-                HomeFragment.newInstance()
-            )
+            R.id.textViewLoginFB -> if (isCheckMultiClick()) buttonLoginFB.performClick()
+            R.id.textViewLoginGG -> if (isCheckMultiClick()) signInWithGoogle()
+            R.id.buttonLogin -> {
+                if (validPassword && validPhone) replaceFragment(
+                    R.id.containerMain,
+                    HomeFragment.newInstance()
+                )
+                isCheckClickableButtonClick(buttonLogin)
+            }
         }
     }
 
@@ -126,10 +143,15 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             try {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 viewModel.receiveDataUserGoogle(task)
-                if (task.exception == null) replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+                if (task.exception == null) replaceFragment(
+                    R.id.containerMain,
+                    HomeFragment.newInstance()
+                )
             } catch (e: ApiException) {
                 when (e.statusCode) {
-                    GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> view!!.showSnackBar(GOOGLE_SIGN_CANCELLED)
+                    GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> view!!.showSnackBar(
+                        GOOGLE_SIGN_CANCELLED
+                    )
                     GoogleSignInStatusCodes.SIGN_IN_FAILED -> view!!.showSnackBar(GOOGLE_SIGN_FAILED)
                 }
             }

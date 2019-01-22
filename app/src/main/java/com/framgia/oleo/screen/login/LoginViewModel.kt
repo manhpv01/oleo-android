@@ -37,16 +37,17 @@ class LoginViewModel @Inject constructor(
     }
 
     fun receiveDataUserFacebook(result: LoginResult) {
-        val request: GraphRequest = GraphRequest.newMeRequest(result.accessToken) { jsonObject, response ->
-            //Handle get value by key
-            userRepository.insertUser(
-                User(
-                    jsonObject.getString(ID_KEY),
-                    jsonObject.getString(NAME_KEY),
-                    jsonObject.getString(EMAIL_KEY)
+        val request: GraphRequest =
+            GraphRequest.newMeRequest(result.accessToken) { jsonObject, response ->
+                //Handle get value by key
+                userRepository.insertUser(
+                    User(
+                        jsonObject.getString(ID_KEY),
+                        jsonObject.getString(NAME_KEY),
+                        jsonObject.getString(EMAIL_KEY)
+                    )
                 )
-            )
-        }
+            }
         //Request Graph API
         val bundle = Bundle()
         bundle.putString(BUNDLE_FIELDS, BUNDLE_REQUEST_KEY)
