@@ -13,5 +13,7 @@
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="or">Hoặc</string>
     <string name="image_description">Mô tả hình ảnh</string>
+    <string name="validPhoneNumber">Số điện thoại không hợp lệ</string>
+    <string name="validPassword">Có ít nhất 1 chữ hoa hoặc chữ thường, không có chữ cái đặc biệt</string>
     <string name="facebook_app_id">344652059597521</string>
 </resources>
