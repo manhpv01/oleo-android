@@ -47,8 +47,8 @@ class MainActivity : BaseActivity() {
             MotionEvent.ACTION_DOWN -> if (currentFocus!! is EditText) {
                 currentFocus!!.clearFocus()
                 inputMethodManager.hideSoftInputFromWindow(
-                    currentFocus!!.windowToken,
-                    InputMethodManager.HIDE_NOT_ALWAYS
+                        currentFocus!!.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
                 )
             }
         }

@@ -16,4 +16,8 @@
     <string name="validPhoneNumber">Số điện thoại không hợp lệ</string>
     <string name="validPassword">Có ít nhất 1 chữ hoa hoặc chữ thường, không có chữ cái đặc biệt</string>
     <string name="facebook_app_id">344652059597521</string>
+    <string name="title_messages">Tin nhắn</string>
+    <string name="title_contacts">Danh Bạ</string>
+    <string name="title_groups">Nhóm</string>
+    <string name="title_more">Thêm</string>
 </resources>

@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
 import com.framgia.oleo.databinding.FragmentHomeBinding
+import com.framgia.oleo.screen.messages.MessagesFragment
 import com.framgia.oleo.utils.liveData.autoCleared
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
 
@@ -25,6 +27,11 @@ class HomeFragment : BaseFragment() {
 
     override fun setUpView() {
         // SetUp View
+        val pagerAdapter= ViewPagerAdapter(this.fragmentManager!!)
+        pagerAdapter.addFragment(MessagesFragment.newInstance())
+        viewPager.adapter = pagerAdapter
+        // To disable swipe
+        viewPager.beginFakeDrag()
     }
 
     override fun bindView() {
