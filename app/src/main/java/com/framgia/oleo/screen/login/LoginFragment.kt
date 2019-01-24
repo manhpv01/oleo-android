@@ -10,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginResult
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
@@ -34,8 +32,6 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        FacebookSdk.sdkInitialize(activity!!.applicationContext)
-        AppEventsLogger.activateApp(context)
         viewModel = LoginViewModel.create(this, viewModelFactory)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         binding.viewModel = viewModel
@@ -93,6 +89,10 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             viewModel.receiveDataUserGoogle(task)
             replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+            viewModel.receiveDataUserGoogle(task)
+            if (task.exception == null) {
+                replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+            }
         }
     }
 
