@@ -62,11 +62,11 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         return binding.root
     }
 
-    override fun setUpView() {
-        callBackManager = CallbackManager.Factory.create()
-        addEditTextListener()
-        initGoogle()
-        textLayoutPassWord.isPasswordVisibilityToggleEnabled = true
+  override fun setUpView() {
+    callBackManager = CallbackManager.Factory.create()
+    addEditTextListener()
+    initGoogle()
+    textLayoutPassWord.isPasswordVisibilityToggleEnabled = true
 
         buttonLogin.setOnClickListener(this)
         textViewLoginFB.setOnClickListener(this)
@@ -74,10 +74,10 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         buttonLogin.setOnClickListener(this)
     }
 
-    override fun bindView() {
-        signInWithFacebook()
-        buttonLoginFB.fragment = this
-    }
+  override fun bindView() {
+    signInWithFacebook()
+    buttonLoginFB.fragment = this
+  }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -93,48 +93,48 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun addEditTextListener() {
-        editTextPhoneNumber.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+  private fun addEditTextListener() {
+    editTextPhoneNumber.addTextChangedListener(object : TextWatcher {
+      override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                validPhone = validInputPhoneNumber(activity!!, s.toString(), textLayoutPhoneNumber)
-                if (s.isNullOrBlank()) textLayoutPhoneNumber.error = null
-            }
-        })
-        editTextPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        validPhone = validInputPhoneNumber(activity!!, s.toString(), textLayoutPhoneNumber)
+        if (s.isNullOrBlank()) textLayoutPhoneNumber.error = null
+      }
+    })
+    editTextPassword.addTextChangedListener(object : TextWatcher {
+      override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                validPassword = validInputPassword(activity!!, s.toString(), textLayoutPassWord)
-                if (s.isNullOrBlank()) textLayoutPassWord.error = null
-            }
-        })
-    }
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        validPassword = validInputPassword(activity!!, s.toString(), textLayoutPassWord)
+        if (s.isNullOrBlank()) textLayoutPassWord.error = null
+      }
+    })
+  }
 
-    private fun signInWithFacebook() {
-        buttonLoginFB.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, EMAIL))
-        buttonLoginFB.registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(result: LoginResult?) {
-                if (result != null) {
-                    viewModel.receiveDataUserFacebook(result)
-                    replaceFragment(R.id.containerMain, HomeFragment.newInstance())
-                } else {
-                    Toast.makeText(context, REQUEST_NULL, Toast.LENGTH_SHORT).show()
-                }
-            }
+  private fun signInWithFacebook() {
+    buttonLoginFB.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, EMAIL))
+    buttonLoginFB.registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
+      override fun onSuccess(result: LoginResult?) {
+        if (result != null) {
+          viewModel.receiveDataUserFacebook(result)
+          replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+        } else {
+          Toast.makeText(context, REQUEST_NULL, Toast.LENGTH_SHORT).show()
+        }
+      }
 
-            override fun onCancel() {
-            }
+      override fun onCancel() {
+      }
 
-            override fun onError(error: FacebookException?) {
-            }
-        })
-    }
+      override fun onError(error: FacebookException?) {
+      }
+    })
+  }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -158,36 +158,36 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun initGoogle() {
-        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(activity!!, googleSignInOptions)
-    }
+  private fun initGoogle() {
+    googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .build()
+    googleSignInClient = GoogleSignIn.getClient(activity!!, googleSignInOptions)
+  }
 
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, LoginFragment.GOOGLE_REQUEST)
-    }
+  private fun signInWithGoogle() {
+    val signInIntent = googleSignInClient.signInIntent
+    startActivityForResult(signInIntent, LoginFragment.GOOGLE_REQUEST)
+  }
 
-    private fun revokeAccess() {
-        googleSignInClient.revokeAccess().addOnCompleteListener(activity!!) { task ->
-            if (task.isSuccessful) {
-            }
-        }
+  private fun revokeAccess() {
+    googleSignInClient.revokeAccess().addOnCompleteListener(activity!!) { task ->
+      if (task.isSuccessful) {
+      }
     }
+  }
 
-    companion object {
-        const val GOOGLE_REQUEST = 1
-        const val REQUEST_NULL = "Data Null"
-        const val PUBLIC_PROFILE = "public_profile"
-        const val EMAIL = "email"
-        const val GOOGLE_SIGN_CANCELLED = "Sign Cancelled"
-        const val GOOGLE_SIGN_FAILED = "Sign Failed"
+  companion object {
+    const val GOOGLE_REQUEST = 1
+    const val REQUEST_NULL = "Data Null"
+    const val PUBLIC_PROFILE = "public_profile"
+    const val EMAIL = "email"
+    const val GOOGLE_SIGN_CANCELLED = "Sign Cancelled"
+    const val GOOGLE_SIGN_FAILED = "Sign Failed"
 
-        fun newInstance() = LoginFragment().apply {
-            val bundle = Bundle()
-            arguments = bundle
-        }
+    fun newInstance() = LoginFragment().apply {
+      val bundle = Bundle()
+      arguments = bundle
     }
+  }
 }

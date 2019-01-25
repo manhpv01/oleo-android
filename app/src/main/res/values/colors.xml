@@ -11,4 +11,6 @@
     <color name="colorGgBg">#d33038</color>
     <color name="colorGrey500">#9e9e9e</color>
     <color name="colorGrey400">#bdbdbd</color>
+    <color name="colorItemNavigationDefault">#ACB6C1</color>
+    <color name="colorItemNavigationClicked">#708EFB</color>
 </resources>

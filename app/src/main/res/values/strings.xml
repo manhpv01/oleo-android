@@ -15,4 +15,8 @@
     <string name="validPhoneNumber">Phone number is invalid</string>
     <string name="validPassword">Have at least 1 upper or lower case letter, no special letter</string>
     <string name="facebook_app_id">344652059597521</string>
+    <string name="title_messages">Messages</string>
+    <string name="title_contacts">Contacts</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_more">More</string>
 </resources>
