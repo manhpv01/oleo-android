@@ -126,6 +126,13 @@ dependencies {
     //Google
     implementation 'com.google.android.gms:play-services-auth:' + rootProject.googleVersion
 
+    //FireBase
+    implementation 'com.google.firebase:firebase-database:' + rootProject.firebaseVersion
+    implementation 'com.google.firebase:firebase-storage:' + rootProject.firebaseVersion
+    implementation 'com.google.firebase:firebase-auth:' + rootProject.firebaseAuthVersion
+    implementation 'com.google.firebase:firebase-core:' + rootProject.firebaseCoreVersion
+    kapt 'com.google.firebase:firebase-database:' + rootProject.firebaseVersion
+
     // Facebook
     implementation 'com.facebook.android:facebook-android-sdk:' + rootProject.facebookSdkVersion
 
