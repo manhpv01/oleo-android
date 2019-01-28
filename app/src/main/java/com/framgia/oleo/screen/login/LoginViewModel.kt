@@ -9,15 +9,24 @@ import com.facebook.login.LoginResult
 import com.framgia.oleo.base.BaseViewModel
 import com.framgia.oleo.data.source.UserRepository
 import com.framgia.oleo.data.source.model.User
+import com.framgia.oleo.utils.Constant
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val application: Application,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val fireBaseAuth: FirebaseAuth,
+    private val fireBaseDatabase: FirebaseDatabase
 ) : BaseViewModel() {
 
     fun checkLastLogin(): Boolean {
@@ -27,13 +36,30 @@ class LoginViewModel @Inject constructor(
     fun receiveDataUserGoogle(completedTask: Task<GoogleSignInAccount>) {
         val account = completedTask.getResult(ApiException::class.java)
         //Xử lý lưu vào room database
-        userRepository.insertUser(
-            User(
-                account?.id.toString(),
-                account?.displayName.toString(),
-                account?.email.toString()
-            )
+        val user = User(
+            account?.id.toString(),
+            account?.displayName.toString(),
+            account?.email.toString()
         )
+        userRepository.deleteUser()
+        userRepository.insertUser(user)
+        //Xử lý lưu vào firebase database
+        fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(account!!.id.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(dataSnapshot: DatabaseError) {}
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        fireBaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.idToken, null))
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    fireBaseDatabase.reference.child(Constant.PATH_STRING_USER)
+                                        .child(account.id.toString()).setValue(user)
+                                }
+                            }
+                    }
+                }
+            })
     }
 
     fun receiveDataUserFacebook(result: LoginResult) {

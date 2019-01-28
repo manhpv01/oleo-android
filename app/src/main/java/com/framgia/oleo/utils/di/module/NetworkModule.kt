@@ -5,6 +5,8 @@ import com.framgia.oleo.BuildConfig
 import com.framgia.oleo.data.source.remote.api.AppApi
 import com.framgia.oleo.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
 import com.framgia.oleo.utils.Constant
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -75,5 +77,17 @@ class NetworkModule {
     @Provides
     fun provideNameApi(retrofit: Retrofit): AppApi {
         return retrofit.create(AppApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireBaseDatabase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireBaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }
