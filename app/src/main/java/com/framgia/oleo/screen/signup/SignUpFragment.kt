@@ -18,7 +18,7 @@ import javax.inject.Inject
 class SignUpFragment : DialogFragment(), Injectable {
 
     @Inject
-    private lateinit var viewModelFactory: ViewModelProvider.Factory
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SignUpViewModel
     private var binding by autoCleared<FragmentSignupBinding>()
 
