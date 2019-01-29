@@ -20,4 +20,9 @@
     <string name="title_contacts">Danh Bạ</string>
     <string name="title_groups">Nhóm</string>
     <string name="title_more">Thêm</string>
+    <string name="title_signUp">Đăng ký</string>
+    <string name="title_cancel">Hủy Bỏ</string>
+    <string name="sign_up">Đăng Ký</string>
+    <string name="user_name">Tên Người Dùng</string>
+    <string name="confirm_password">Xác Nhận Mật Khẩu</string>
 </resources>
