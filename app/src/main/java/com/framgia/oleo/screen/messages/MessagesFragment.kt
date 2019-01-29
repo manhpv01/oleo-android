@@ -34,7 +34,7 @@ class MessagesFragment : BaseFragment(), OnItemRecyclerViewClick<RoomChat> {
 
     override fun bindView() {
         // Add Show View
-        viewModel.getAllMessages()
+//        viewModel.getAllMessages()
     }
 
     override fun onItemClickListener(data: RoomChat) {
