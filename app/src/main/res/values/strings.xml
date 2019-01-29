@@ -19,4 +19,9 @@
     <string name="title_contacts">Contacts</string>
     <string name="title_groups">Groups</string>
     <string name="title_more">More</string>
+    <string name="title_signUp">SignUp</string>
+    <string name="title_cancel">Cancel</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="user_name">User Name</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
