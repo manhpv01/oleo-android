@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutEditText"
             android:layout_width="0dp"
@@ -21,6 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.9">
+
             <TextView
                 android:id="@+id/textViewSignUp"
                 android:layout_width="0dp"
@@ -36,6 +38,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@id/editTextUserName"
                 app:layout_constraintTop_toTopOf="parent"/>
+
             <ImageView
                 android:id="@+id/buttonClose"
                 android:layout_width="wrap_content"
@@ -45,80 +48,143 @@
                 app:layout_constraintEnd_toEndOf="@id/editTextUserName"
                 app:layout_constraintStart_toEndOf="@id/textViewSignUp"
                 app:layout_constraintTop_toTopOf="@id/textViewSignUp"/>
-            <EditText
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextUserName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:backgroundTint="@color/colorEditText"
-                android:drawablePadding="@dimen/dp_24"
-                android:drawableStart="@drawable/ic_user"
-                android:fontFamily="serif"
-                android:hint="@string/user_name"
-                android:textColorHint="@color/colorGrey800Light"
-                android:textSize="@dimen/sp_14"
-                app:layout_constraintBottom_toTopOf="@id/editTextPhoneNumber"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toTopOf="@id/editTextEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewSignUp"
-                app:layout_constraintWidth_percent="0.9"/>
-            <EditText
-                android:id="@+id/editTextPhoneNumber"
+                app:layout_constraintWidth_percent="0.9"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:backgroundTint="@color/colorEditText"
+                    android:drawablePadding="@dimen/dp_24"
+                    android:drawableStart="@drawable/ic_user"
+                    android:fontFamily="serif"
+                    android:hint="@string/user_name"
+                    android:textColorHint="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_14"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:backgroundTint="@color/colorEditText"
-                android:drawablePadding="@dimen/dp_24"
-                android:drawableStart="@drawable/ic_phone"
-                android:fontFamily="serif"
-                android:inputType="number"
-                android:hint="@string/phone_number"
-                android:textColorHint="@color/colorGrey800Light"
-                android:textSize="@dimen/sp_14"
-                app:layout_constraintBottom_toTopOf="@id/editTextPassword"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toTopOf="@id/editTextPhoneNumber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextUserName"
-                app:layout_constraintWidth_percent="0.9"/>
-            <EditText
+                app:layout_constraintWidth_percent="0.9"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    android:backgroundTint="@color/colorEditText"
+                    android:drawablePadding="@dimen/dp_24"
+                    android:drawableStart="@drawable/ic_email"
+                    android:fontFamily="serif"
+                    android:hint="@string/email"
+                    android:textColorHint="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_14"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toTopOf="@id/editTextPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+                app:layout_constraintWidth_percent="0.9"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    android:backgroundTint="@color/colorEditText"
+                    android:drawablePadding="@dimen/dp_24"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:fontFamily="serif"
+                    android:hint="@string/phone_number"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_14"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:backgroundTint="@color/colorEditText"
-                android:drawablePadding="@dimen/dp_24"
-                android:drawableStart="@drawable/ic_password"
-                android:fontFamily="serif"
-                android:hint="@string/password"
-                android:textColorHint="@color/colorGrey800Light"
-                android:textSize="@dimen/sp_14"
-                android:inputType="textPassword"
+                app:boxStrokeColor="@color/colorPrimaryDark"
                 app:layout_constraintBottom_toTopOf="@id/editTextConfirmPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextPhoneNumber"
-                app:layout_constraintWidth_percent="0.9"/>
-            <EditText
+                app:layout_constraintWidth_percent="0.9"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    android:backgroundTint="@color/colorEditText"
+                    android:drawablePadding="@dimen/dp_24"
+                    android:drawableStart="@drawable/ic_password"
+                    android:fontFamily="serif"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_14"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextConfirmPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:inputType="textPassword"
-                android:backgroundTint="@color/colorEditText"
-                android:drawablePadding="@dimen/dp_24"
-                android:drawableStart="@drawable/ic_password"
-                android:fontFamily="serif"
-                android:hint="@string/confirm_password"
-                android:textColorHint="@color/colorGrey800Light"
-                android:textSize="@dimen/sp_14"
+                app:boxStrokeColor="@color/colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editTextPassword"
-                app:layout_constraintWidth_percent="0.9"/>
+                app:layout_constraintWidth_percent="0.9"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    android:backgroundTint="@color/colorEditText"
+                    android:drawablePadding="@dimen/dp_24"
+                    android:drawableStart="@drawable/ic_password"
+                    android:fontFamily="serif"
+                    android:hint="@string/confirm_password"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_14"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageButton
-            android:id="@+id/button"
+            android:id="@+id/buttonSignUp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_sign_up_bg"
@@ -130,5 +196,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutEditText"
             app:layout_constraintWidth_percent="0.3"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

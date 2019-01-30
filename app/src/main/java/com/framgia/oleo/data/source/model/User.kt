@@ -3,6 +3,7 @@ package com.framgia.oleo.data.source.model
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
@@ -10,13 +11,16 @@ class User {
     @NonNull
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    lateinit var id: String
+    var id: String = ""
 
     @ColumnInfo(name = "user_name")
-    lateinit var userName: String
+    var userName: String = ""
 
     @ColumnInfo(name = "email")
-    lateinit var email: String
+    var email: String = ""
+
+    @ColumnInfo(name = "phone_number")
+    var phoneNumber: String = ""
 
     constructor()
 
