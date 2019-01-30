@@ -30,4 +30,5 @@
     <string name="validEmail">Email is invalid</string>
     <string name="validUserName">UserName is invalid</string>
     <string name="validConfirmPassword">ConfirmPassword is invalid</string>
+    <string name="hintSearch">Search…</string>
 </resources>

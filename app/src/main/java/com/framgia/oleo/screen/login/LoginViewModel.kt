@@ -39,9 +39,10 @@ class LoginViewModel @Inject constructor(
         val user = User(
             account?.id.toString(),
             account?.displayName.toString(),
-            account?.email.toString()
+            account?.email.toString(),
+            account?.photoUrl.toString()
         )
-        userRepository.insertUser(user)
+        insertUser(user)
         //Xử lý lưu vào firebase database
         fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(account!!.id.toString())
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -65,19 +66,30 @@ class LoginViewModel @Inject constructor(
         val request: GraphRequest =
             GraphRequest.newMeRequest(result.accessToken) { jsonObject, response ->
                 //Handle get value by key
-                userRepository.insertUser(
-                    User(
-                        jsonObject.getString(ID_KEY),
-                        jsonObject.getString(NAME_KEY),
-                        jsonObject.getString(EMAIL_KEY)
-                    )
+                val user = User(
+                    jsonObject.getString(ID_KEY),
+                    jsonObject.getString(NAME_KEY),
+                    jsonObject.getString(EMAIL_KEY),
+                    Constant.BASE_FB_PICTURE + jsonObject.getString(ID_KEY) + Constant.PICTURE_TYPE
                 )
+                insertUser(user)
             }
         //Request Graph API
         val bundle = Bundle()
         bundle.putString(BUNDLE_FIELDS, BUNDLE_REQUEST_KEY)
         request.parameters = bundle
         request.executeAsync()
+    }
+
+    fun insertUser(user: User) {
+        if (userRepository.getUser() == null) {
+            userRepository.insertUser(user)
+        } else {
+            if (userRepository.getUser().id != user.id && user != null) {
+                userRepository.deleteUser()
+                userRepository.insertUser(user)
+            }
+        }
     }
 
     companion object {
