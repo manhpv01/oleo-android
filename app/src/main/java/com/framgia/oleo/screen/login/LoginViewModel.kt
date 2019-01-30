@@ -41,7 +41,6 @@ class LoginViewModel @Inject constructor(
             account?.displayName.toString(),
             account?.email.toString()
         )
-        userRepository.deleteUser()
         userRepository.insertUser(user)
         //Xử lý lưu vào firebase database
         fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(account!!.id.toString())

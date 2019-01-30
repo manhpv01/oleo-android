@@ -24,4 +24,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="user_name">User Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up_success">Sign Up Successful</string>
+    <string name="sign_up_fail">Sign Up Failure</string>
+    <string name="email">Email</string>
 </resources>

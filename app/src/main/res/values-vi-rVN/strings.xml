@@ -25,4 +25,7 @@
     <string name="sign_up">Đăng Ký</string>
     <string name="user_name">Tên Người Dùng</string>
     <string name="confirm_password">Xác Nhận Mật Khẩu</string>
+    <string name="email">Email</string>
+    <string name="sign_up_success">Đăng Ký Thành Công</string>
+    <string name="sign_up_fail">Đăng Ký Thất Bại</string>
 </resources>
