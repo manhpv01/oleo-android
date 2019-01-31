@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             R.id.textViewLoginFB -> if (isCheckMultiClick()) buttonLoginFB.performClick()
             R.id.textViewLoginGG -> if (isCheckMultiClick()) signInWithGoogle()
             R.id.buttonLogin -> onCheckValidateFormAndLogin()
-            R.id.textViewSignUp -> SignUpFragment.newInstance().show(fragmentManager, TAG_DIALOG)
+            R.id.textViewSignUp -> if (isCheckMultiClick()) SignUpFragment.newInstance().show(fragmentManager, TAG_DIALOG)
         }
     }
 
