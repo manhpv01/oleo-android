@@ -27,4 +27,7 @@
     <string name="sign_up_success">Sign Up Successful</string>
     <string name="sign_up_fail">Sign Up Failure</string>
     <string name="email">Email</string>
+    <string name="validEmail">Email is invalid</string>
+    <string name="validUserName">UserName is invalid</string>
+    <string name="validConfirmPassword">ConfirmPassword is invalid</string>
 </resources>

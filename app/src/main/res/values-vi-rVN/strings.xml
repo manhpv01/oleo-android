@@ -14,7 +14,7 @@
     <string name="or">Hoặc</string>
     <string name="image_description">Mô tả hình ảnh</string>
     <string name="validPhoneNumber">Số điện thoại không hợp lệ</string>
-    <string name="validPassword">Mật khẩu không hợp lệ </string>
+    <string name="validPassword">Mật khẩu không hợp lệ</string>
     <string name="facebook_app_id">344652059597521</string>
     <string name="title_messages">Tin nhắn</string>
     <string name="title_contacts">Danh Bạ</string>
@@ -28,4 +28,7 @@
     <string name="email">Email</string>
     <string name="sign_up_success">Đăng Ký Thành Công</string>
     <string name="sign_up_fail">Đăng Ký Thất Bại</string>
+    <string name="validEmail">Email không hợp lệ</string>
+    <string name="validUserName">Tên người dùng không hợp lệ</string>
+    <string name="validConfirmPassword">Xác nhận mật khẩu không hợp lệ</string>
 </resources>
