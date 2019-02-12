@@ -31,4 +31,5 @@
     <string name="validEmail">Email không hợp lệ</string>
     <string name="validUserName">Tên người dùng không hợp lệ</string>
     <string name="validConfirmPassword">Xác nhận mật khẩu không hợp lệ</string>
+    <string name="hintSearch">Tìm Kiếm…</string>
 </resources>

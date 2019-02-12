@@ -1,8 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+  <data>
+
+    <variable
+        name="viewModel"
+        type="com.framgia.oleo.screen.messages.MessagesAdapterViewModel"/>
+  </data>
+
+  <androidx.cardview.widget.CardView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/dp_10"
+      android:layout_marginStart="@dimen/dp_10"
+      android:layout_marginTop="@dimen/dp_10"
+      android:background="@android:color/white"
+      app:cardCornerRadius="@dimen/dp_5">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+      <ImageView
+          android:id="@+id/imageProfile"
+          android:layout_width="@dimen/dp_50"
+          android:layout_height="@dimen/dp_50"
+          android:layout_marginStart="@dimen/sp_16"
+          android:imageUrl="@{viewModel.user.image}"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <TextView
+          android:id="@+id/textFriendName"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dp_10"
+          android:textSize="@dimen/sp_16"
+          app:layout_constraintBottom_toTopOf="@id/textMessage"
+          app:layout_constraintEnd_toStartOf="@id/textTime"
+          app:layout_constraintStart_toEndOf="@id/imageProfile"
+          app:layout_constraintTop_toTopOf="@id/imageProfile"/>
+
+      <TextView
+          android:id="@+id/textMessage"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.message.message}"
+          android:textSize="@dimen/sp_14"
+          app:layout_constraintBottom_toBottomOf="@id/imageProfile"
+          app:layout_constraintStart_toStartOf="@id/textFriendName"
+          app:layout_constraintTop_toBottomOf="@id/textFriendName"/>
+
+      <TextView
+          android:id="@+id/textTime"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.message.time}"
+          android:textSize="@dimen/sp_12"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/textFriendName"
+          app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
+</layout>
