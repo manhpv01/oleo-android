@@ -15,7 +15,7 @@ class MessagesAdapterViewModel : BaseObservable() {
 
     fun setMessage(userId: String, roomId: String) {
         fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(userId)
-            .child(Constant.PATH_STRING_ROOM).child(roomId).child(Constant.PATH_STRING_MESSAGE)
+            .child(Constant.PATH_STRING_BOX).child(roomId).child(Constant.PATH_STRING_MESSAGE)
             .addChildEventListener(object : ChildEventListener {
 
                 override fun onCancelled(databaseError: DatabaseError) {}

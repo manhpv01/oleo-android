@@ -1,5 +1,6 @@
 package com.framgia.oleo.utils.di.module
 
+import com.framgia.oleo.screen.boxchat.BoxChatFragment
 import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.screen.login.LoginFragment
 import com.framgia.oleo.screen.messages.MessagesFragment
@@ -24,4 +25,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSettingFragment(): SettingFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeBoxFragment(): BoxChatFragment
 }
