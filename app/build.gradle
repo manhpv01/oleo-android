@@ -138,6 +138,7 @@ dependencies {
 
     // Other
     implementation "com.github.bumptech.glide:glide:" + rootProject.glideVersion
+    implementation 'de.hdodenhof:circleimageview:' + rootProject.circleimageviewVersion
     kapt "com.github.bumptech.glide:compiler:" + rootProject.glideVersion
     kapt 'androidx.databinding:databinding-compiler:' + rootProject.bindingCompilerVersion
 
