@@ -32,4 +32,10 @@
     <string name="validUserName">Tên người dùng không hợp lệ</string>
     <string name="validConfirmPassword">Xác nhận mật khẩu không hợp lệ</string>
     <string name="hintSearch">Tìm Kiếm…</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="watch_list">Danh sách theo dõi</string>
+    <string name="app_information">Thông tin ứng dụng</string>
+    <string name="security">Bảo mật</string>
+    <string name="notification">Thông Báo</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

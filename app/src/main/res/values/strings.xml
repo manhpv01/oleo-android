@@ -31,4 +31,10 @@
     <string name="validUserName">UserName is invalid</string>
     <string name="validConfirmPassword">ConfirmPassword is invalid</string>
     <string name="hintSearch">Search…</string>
+    <string name="log_out">Log out</string>
+    <string name="watch_list">Watch list</string>
+    <string name="app_information">Application information</string>
+    <string name="security">Security</string>
+    <string name="notification">Notification</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

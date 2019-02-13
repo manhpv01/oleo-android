@@ -10,6 +10,7 @@ import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
 import com.framgia.oleo.databinding.FragmentHomeBinding
 import com.framgia.oleo.screen.messages.MessagesFragment
+import com.framgia.oleo.screen.setting.SettingFragment
 import com.framgia.oleo.utils.liveData.autoCleared
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -31,6 +32,7 @@ class HomeFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
         // SetUp View
         val pagerAdapter = ViewPagerAdapter(this.fragmentManager!!)
         pagerAdapter.addFragment(MessagesFragment.newInstance())
+        pagerAdapter.addFragment(SettingFragment.newInstance())
         viewPager.adapter = pagerAdapter
         // To disable swipe
         viewPager.beginFakeDrag()
@@ -44,6 +46,7 @@ class HomeFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.navigation_messages -> {
+                viewPager.setCurrentItem(0, false)
                 return true
             }
             R.id.navigation_contacts -> {
@@ -53,6 +56,7 @@ class HomeFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_more -> {
+                viewPager.setCurrentItem(1, false)
                 return true
             }
         }

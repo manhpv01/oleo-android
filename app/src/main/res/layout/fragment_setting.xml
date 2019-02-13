@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.framgia.oleo.screen.setting.SettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSettingGb">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layoutTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/profile_bg">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/dp_32"
+                    android:src="@drawable/avatar"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="@dimen/dp_2"
+                    app:layout_constraintBottom_toTopOf="@id/textViewNameUser"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.35" />
+
+                <TextView
+                    android:id="@+id/textViewNameUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_8"
+                    android:fontFamily="serif"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    app:layout_constraintBottom_toTopOf="@id/textViewEditProfile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageProfile" />
+
+                <TextView
+                    android:id="@+id/textViewEditProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:background="@drawable/edit_profile_bg"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_edit_state"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:focusable="true"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_8"
+                    android:paddingStart="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/edit_profile"
+                    android:textColor="@color/edit_profile_state"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNameUser" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layoutCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutWatchList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutTop">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_notification"
+                    android:drawablePadding="@dimen/dp_26"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_24"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/notification"
+                    android:textColor="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toStartOf="@id/switchNotification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.8" />
+
+                <Switch
+                    android:id="@+id/switchNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:thumbTint="@color/colorPrimaryDark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textViewNotification"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.2" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/LineUnderTextViewNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/colorGrey400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNotification"
+                    app:layout_constraintWidth_percent="0.82" />
+
+                <TextView
+                    android:id="@+id/textViewSecurity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_security"
+                    android:drawablePadding="@dimen/dp_26"
+                    android:focusable="true"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_24"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/security"
+                    android:textColor="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/LineUnderTextViewNotification"
+                    app:layout_constraintWidth_percent="1" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/LineUnderTextViewSecurity"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/colorGrey400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSecurity"
+                    app:layout_constraintWidth_percent="0.82" />
+
+                <TextView
+                    android:id="@+id/textViewAppInformation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawablePadding="@dimen/dp_26"
+                    android:focusable="true"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_24"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/app_information"
+                    android:textColor="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/LineUnderTextViewSecurity"
+                    app:layout_constraintWidth_percent="1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layoutWatchList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutCenter">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewWatchList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_follow"
+                    android:drawablePadding="@dimen/dp_26"
+                    android:focusable="true"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_24"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/watch_list"
+                    android:textColor="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layoutBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutWatchList">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewLogOut"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_logout"
+                    android:drawablePadding="@dimen/dp_26"
+                    android:focusable="true"
+                    android:fontFamily="serif"
+                    android:padding="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_24"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/log_out"
+                    android:textColor="@color/colorGrey800Light"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

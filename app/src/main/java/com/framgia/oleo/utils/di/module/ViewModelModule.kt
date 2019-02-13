@@ -6,6 +6,7 @@ import com.framgia.oleo.screen.home.HomeViewModel
 import com.framgia.oleo.screen.login.LoginViewModel
 import com.framgia.oleo.screen.main.MainViewModel
 import com.framgia.oleo.screen.messages.MessagesViewModel
+import com.framgia.oleo.screen.setting.SettingViewModel
 import com.framgia.oleo.screen.signup.SignUpViewModel
 import com.framgia.oleo.utils.di.AppViewModelFactory
 import com.framgia.oleo.utils.di.ViewModelKey
@@ -39,6 +40,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     abstract fun bindSignUpViewModel(signUpViewModel: SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingViewModel::class)
+    abstract fun bindSettingViewModel(settingViewModel: SettingViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory

@@ -16,4 +16,6 @@
     <color name="colorItemNavigationDefault">#ACB6C1</color>
     <color name="colorItemNavigationClicked">#708EFB</color>
     <color name="colorButtonSignUp">#6A8DF3</color>
+    <color name="colorIconNotification">#f25d43</color>
+    <color name="colorSettingGb">#ededfc</color>
 </resources>
