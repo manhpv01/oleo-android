@@ -1,8 +1,10 @@
 package com.framgia.oleo.utils.di.module
 
+import com.framgia.oleo.data.source.MessagesRepository
 import com.framgia.oleo.data.source.UserRepository
 import com.framgia.oleo.data.source.local.UserLocalDataSource
 import com.framgia.oleo.data.source.local.dao.UserDatabase
+import com.framgia.oleo.data.source.remote.MesssagesRemoteDataSource
 import com.framgia.oleo.data.source.remote.UserRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -15,5 +17,11 @@ class RepositoryModule {
     @Singleton
     fun provideUserLocalRepository(userDatabase: UserDatabase): UserRepository {
         return UserRepository(UserLocalDataSource(userDatabase.userDAO()), UserRemoteDataSource())
+    }
+
+    @Provides
+    @Singleton
+    fun provideMessagesRepository(firebase: MesssagesRemoteDataSource): MessagesRepository {
+        return MessagesRepository(firebase)
     }
 }
