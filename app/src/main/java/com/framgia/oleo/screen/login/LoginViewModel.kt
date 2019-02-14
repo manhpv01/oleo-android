@@ -10,8 +10,8 @@ import com.framgia.oleo.base.BaseViewModel
 import com.framgia.oleo.data.source.UserRepository
 import com.framgia.oleo.data.source.model.User
 import com.framgia.oleo.utils.Constant
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -26,12 +26,11 @@ class LoginViewModel @Inject constructor(
     private val application: Application,
     private val userRepository: UserRepository,
     private val fireBaseAuth: FirebaseAuth,
-    private val fireBaseDatabase: FirebaseDatabase
+    private val fireBaseDatabase: FirebaseDatabase,
+    private val googleSignInOptions: GoogleSignInOptions
 ) : BaseViewModel() {
 
-    fun checkLastLogin(): Boolean {
-        return GoogleSignIn.getLastSignedInAccount(application) != null
-    }
+    fun getGoogleSignInOptions(): GoogleSignInOptions = googleSignInOptions
 
     fun receiveDataUserGoogle(completedTask: Task<GoogleSignInAccount>) {
         val account = completedTask.getResult(ApiException::class.java)
@@ -49,15 +48,15 @@ class LoginViewModel @Inject constructor(
                 override fun onCancelled(dataSnapshot: DatabaseError) {}
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (!dataSnapshot.exists()) {
-                        fireBaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.idToken, null))
-                            .addOnCompleteListener { task ->
+                    fireBaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.idToken, null))
+                        .addOnCompleteListener { task ->
+                            if (!dataSnapshot.exists()) {
                                 if (task.isSuccessful) {
                                     fireBaseDatabase.reference.child(Constant.PATH_STRING_USER)
                                         .child(account.id.toString()).setValue(user)
                                 }
                             }
-                    }
+                        }
                 }
             })
     }

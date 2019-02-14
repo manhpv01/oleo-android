@@ -5,6 +5,7 @@ import com.framgia.oleo.BuildConfig
 import com.framgia.oleo.data.source.remote.api.AppApi
 import com.framgia.oleo.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
 import com.framgia.oleo.utils.Constant
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -89,5 +90,14 @@ class NetworkModule {
     @Provides
     fun provideFireBaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGoogleSignInOptions(): GoogleSignInOptions {
+        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(BuildConfig.GOOGLE_WEB_CLIENT_ID)
+            .requestEmail()
+            .build()
     }
 }
