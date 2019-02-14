@@ -20,28 +20,15 @@ import com.framgia.oleo.databinding.FragmentLoginBinding
 import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.screen.signup.SignUpFragment
 import com.framgia.oleo.utils.Constant.MIN_CHARACTER_INPUT_PASSWORD
-import com.framgia.oleo.utils.extension.isCheckClickableButtonClick
-import com.framgia.oleo.utils.extension.isCheckMultiClick
-import com.framgia.oleo.utils.extension.replaceFragment
-import com.framgia.oleo.utils.extension.showSnackBar
-import com.framgia.oleo.utils.extension.validInputPassword
-import com.framgia.oleo.utils.extension.validInputPhoneNumber
+import com.framgia.oleo.utils.extension.*
 import com.framgia.oleo.utils.liveData.autoCleared
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
-import kotlinx.android.synthetic.main.fragment_login.buttonLogin
-import kotlinx.android.synthetic.main.fragment_login.buttonLoginFB
-import kotlinx.android.synthetic.main.fragment_login.editTextPassword
-import kotlinx.android.synthetic.main.fragment_login.editTextPhoneNumber
-import kotlinx.android.synthetic.main.fragment_login.textLayoutPassWord
-import kotlinx.android.synthetic.main.fragment_login.textLayoutPhoneNumber
-import kotlinx.android.synthetic.main.fragment_login.textViewLoginFB
-import kotlinx.android.synthetic.main.fragment_login.textViewLoginGG
-import kotlinx.android.synthetic.main.fragment_login.textViewSignUp
-import java.util.Arrays
+import kotlinx.android.synthetic.main.fragment_login.*
+import java.util.*
 
 class LoginFragment : BaseFragment(), View.OnClickListener {
 
@@ -65,7 +52,7 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
     override fun setUpView() {
         callBackManager = CallbackManager.Factory.create()
         onCheckTextChanged()
-        initGoogle()
+        googleSignInClient = GoogleSignIn.getClient(activity!!, viewModel.getGoogleSignInOptions())
         textLayoutPassWord.isPasswordVisibilityToggleEnabled = true
 
         buttonLogin.setOnClickListener(this)
@@ -124,11 +111,6 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
                 }
             }
         }
-    }
-
-    private fun initGoogle() {
-        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(activity!!, googleSignInOptions)
     }
 
     private fun signInWithGoogle() {
