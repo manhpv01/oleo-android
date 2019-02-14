@@ -89,9 +89,11 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             }
 
             override fun onCancel() {
+                view!!.showSnackBar(FACEBOOK_SIGN_CANCELLED)
             }
 
             override fun onError(error: FacebookException?) {
+                view!!.showSnackBar(FACEBOOK_SIGN_FAILED + error.toString())
             }
         })
     }
@@ -180,6 +182,8 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         const val EMAIL = "email"
         const val GOOGLE_SIGN_CANCELLED = "Sign Cancelled"
         const val GOOGLE_SIGN_FAILED = "Sign Failed"
+        const val FACEBOOK_SIGN_CANCELLED = "Login Cancelled"
+        const val FACEBOOK_SIGN_FAILED = "Login Failed"
         const val TAG_DIALOG = "SignUp"
 
         fun newInstance() = LoginFragment().apply {

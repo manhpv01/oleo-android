@@ -17,6 +17,8 @@ import com.framgia.oleo.screen.login.LoginFragment
 import com.framgia.oleo.utils.extension.isCheckMultiClick
 import com.framgia.oleo.utils.extension.replaceFragment
 import com.framgia.oleo.utils.liveData.autoCleared
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_setting.*
 
@@ -24,6 +26,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModel: SettingViewModel
     private var binding by autoCleared<FragmentSettingBinding>()
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel = SettingViewModel.create(this, viewModelFactory)
@@ -51,6 +54,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener {
         builder.setPositiveButton(getString(R.string.ok)) { dialog, id ->
             signOutFacebook()
             signOutGoogle()
+            viewModel.deleteUser()
             replaceFragment(R.id.containerMain, LoginFragment.newInstance(), false)
         }
         builder.setNegativeButton(getString(R.string.cancel)) { dialog, which -> dialog.dismiss() }
@@ -71,7 +75,11 @@ class SettingFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun signOutGoogle() {
-        FirebaseAuth.getInstance()?.signOut()
+        googleSignInClient = GoogleSignIn.getClient(activity!!, viewModel.getGoogleSignInOptions())
+        if (FirebaseAuth.getInstance() != null && googleSignInClient != null) {
+            FirebaseAuth.getInstance().signOut()
+            googleSignInClient.signOut()
+        }
     }
 
     companion object {
