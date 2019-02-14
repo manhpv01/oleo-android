@@ -25,7 +25,9 @@ class MessagesViewModel @Inject constructor(
 
     fun setAdapter(messageAdapter: MessagesAdapter) {
         this.messageAdapter = messageAdapter
-        this.messageAdapter.getUser(userRepository.getUser())
+        if (userRepository.getUser() != null) {
+            this.messageAdapter.getUser(userRepository.getUser())
+        }
     }
 
     fun getAllMessages() {
