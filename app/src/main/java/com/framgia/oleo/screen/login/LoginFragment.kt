@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
+import com.framgia.oleo.data.source.model.User
 import com.framgia.oleo.databinding.FragmentLoginBinding
 import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.screen.signup.SignUpFragment
@@ -27,6 +29,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
 
@@ -54,7 +59,6 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         onCheckTextChanged()
         googleSignInClient = GoogleSignIn.getClient(activity!!, viewModel.getGoogleSignInOptions())
         textLayoutPassWord.isPasswordVisibilityToggleEnabled = true
-
         buttonLogin.setOnClickListener(this)
         textViewLoginFB.setOnClickListener(this)
         textViewLoginGG.setOnClickListener(this)
@@ -71,8 +75,11 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         when (v!!.id) {
             R.id.textViewLoginFB -> if (isCheckMultiClick()) buttonLoginFB.performClick()
             R.id.textViewLoginGG -> if (isCheckMultiClick()) signInWithGoogle()
-            R.id.buttonLogin -> onCheckValidateFormAndLogin()
-            R.id.textViewSignUp -> if (isCheckMultiClick()) SignUpFragment.newInstance().show(fragmentManager, TAG_DIALOG)
+            R.id.buttonLogin -> signWithPhoneNumberAndPassword()
+            R.id.textViewSignUp -> if (isCheckMultiClick()) SignUpFragment.newInstance().show(
+                fragmentManager,
+                TAG_DIALOG
+            )
         }
     }
 
@@ -94,6 +101,31 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             override fun onError(error: FacebookException?) {
             }
         })
+    }
+
+    private fun signWithPhoneNumberAndPassword() {
+        if (!onCheckValidateFormLogin()) {
+            return;
+        }
+        viewModel.signInWithPhoneNumber(editTextPhoneNumber.text.toString(),
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        view?.showSnackBar(getString(R.string.phone_number_invalid))
+                        return
+                    }
+                    if (dataSnapshot.child(PASSWORD).getValue().toString() != editTextPassword.text.toString()) {
+                        view?.showSnackBar(getString(R.string.password_invalid))
+                        return
+                    }
+                    viewModel.insertUser(dataSnapshot.getValue(User::class.java)!!)
+                    replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    view?.showSnackBar(getString(R.string.login_failed))
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,16 +157,17 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun onCheckValidateFormAndLogin() {
+    private fun onCheckValidateFormLogin(): Boolean {
+        isCheckClickableButtonClick(buttonLogin)
         if (validInputPhoneNumber(
                 context!!, editTextPhoneNumber.text.toString(), textLayoutPhoneNumber
             ) && validInputPassword(
                 context!!, editTextPassword.text.toString(), textLayoutPassWord
             )
         ) {
-            replaceFragment(R.id.containerMain, HomeFragment.newInstance())
+            return true
         }
-        isCheckClickableButtonClick(buttonLogin)
+        return false
     }
 
     private fun onCheckTextChanged() {
@@ -181,6 +214,7 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         const val GOOGLE_SIGN_CANCELLED = "Sign Cancelled"
         const val GOOGLE_SIGN_FAILED = "Sign Failed"
         const val TAG_DIALOG = "SignUp"
+        const val PASSWORD = "password"
 
         fun newInstance() = LoginFragment().apply {
             val bundle = Bundle()

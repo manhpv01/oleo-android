@@ -58,3 +58,4 @@ class MessagesViewModel @Inject constructor(
             ViewModelProvider(fragment, factory).get(MessagesViewModel::class.java)
     }
 }
+

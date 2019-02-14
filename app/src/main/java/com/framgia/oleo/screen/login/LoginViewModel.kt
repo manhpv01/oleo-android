@@ -91,6 +91,16 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun signInWithPhoneNumber(
+        phoneNumber: String,
+        valueEventListener: ValueEventListener
+    ) {
+        fireBaseDatabase.reference
+            .child(Constant.PATH_STRING_USER)
+            .child(phoneNumber)
+            .addListenerForSingleValueEvent(valueEventListener)
+    }
+
     companion object {
         const val BUNDLE_FIELDS = "fields"
         const val BUNDLE_REQUEST_KEY = "id,name,email"
