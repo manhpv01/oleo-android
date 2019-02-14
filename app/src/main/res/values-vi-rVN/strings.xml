@@ -38,4 +38,7 @@
     <string name="security">Bảo mật</string>
     <string name="notification">Thông Báo</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="ok">Đồng ý</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="validate_log_out">Bạn muốn đăng xuất?</string>
 </resources>
