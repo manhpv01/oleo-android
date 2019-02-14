@@ -37,4 +37,7 @@
     <string name="security">Security</string>
     <string name="notification">Notification</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="validate_log_out">Do you want to log out?</string>
 </resources>
