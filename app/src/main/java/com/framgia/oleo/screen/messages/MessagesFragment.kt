@@ -10,13 +10,15 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
-import com.framgia.oleo.data.source.model.RoomChat
+import com.framgia.oleo.data.source.model.BoxChat
 import com.framgia.oleo.databinding.FragmentMessagesBinding
+import com.framgia.oleo.screen.boxchat.BoxChatFragment
 import com.framgia.oleo.utils.OnItemRecyclerViewClick
+import com.framgia.oleo.utils.extension.addFragment
 import com.framgia.oleo.utils.liveData.autoCleared
 import kotlinx.android.synthetic.main.fragment_messages.*
 
-class MessagesFragment : BaseFragment(), OnItemRecyclerViewClick<RoomChat>, SearchView.OnQueryTextListener, View.OnClickListener {
+class MessagesFragment : BaseFragment(), OnItemRecyclerViewClick<BoxChat>, SearchView.OnQueryTextListener, View.OnClickListener {
 
     private lateinit var viewModel: MessagesViewModel
     private var binding by autoCleared<FragmentMessagesBinding>()
@@ -44,8 +46,9 @@ class MessagesFragment : BaseFragment(), OnItemRecyclerViewClick<RoomChat>, Sear
         viewModel.getAllMessages()
     }
 
-    override fun onItemClickListener(data: RoomChat) {
+    override fun onItemClickListener(data: BoxChat) {
         //Open Chat Screen
+        addFragment(R.id.containerMain, BoxChatFragment.newInstance(data))
     }
 
     override fun onClick(v: View?) {

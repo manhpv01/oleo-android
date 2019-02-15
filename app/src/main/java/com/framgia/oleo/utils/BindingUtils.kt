@@ -2,6 +2,7 @@ package com.framgia.oleo.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.framgia.oleo.R
@@ -15,6 +16,12 @@ class BindingUtils {
             Glide.with(image.context).load(uri)
                 .apply(RequestOptions().circleCrop().placeholder(R.drawable.no_profile))
                 .into(image)
+        }
+
+        @BindingAdapter("android:adapter")
+        @JvmStatic
+        fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
+            recyclerView.adapter = adapter
         }
     }
 }

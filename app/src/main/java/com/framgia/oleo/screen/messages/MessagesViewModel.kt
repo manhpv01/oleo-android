@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.framgia.oleo.base.BaseViewModel
 import com.framgia.oleo.data.source.UserRepository
-import com.framgia.oleo.data.source.model.RoomChat
+import com.framgia.oleo.data.source.model.BoxChat
 import com.framgia.oleo.utils.Constant
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
@@ -35,7 +35,7 @@ class MessagesViewModel @Inject constructor(
         if (user != null) {
             val databaseReference =
                 fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(user.id)
-                    .child(Constant.PATH_STRING_ROOM)
+                    .child(Constant.PATH_STRING_BOX)
             databaseReference.addChildEventListener(object : ChildEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {}
 
@@ -44,7 +44,7 @@ class MessagesViewModel @Inject constructor(
                 override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {}
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                    val data = dataSnapshot.getValue(RoomChat::class.java)
+                    val data = dataSnapshot.getValue(BoxChat::class.java)
                     messageAdapter.updateData(data!!)
                 }
 

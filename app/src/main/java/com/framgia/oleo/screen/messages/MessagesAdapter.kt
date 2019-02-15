@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.framgia.oleo.R
-import com.framgia.oleo.data.source.model.RoomChat
+import com.framgia.oleo.data.source.model.BoxChat
 import com.framgia.oleo.data.source.model.User
 import com.framgia.oleo.databinding.AdapterMessageBinding
 import com.framgia.oleo.utils.Constant
@@ -14,16 +14,16 @@ import com.framgia.oleo.utils.OnItemRecyclerViewClick
 
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.Companion.MessagesHolder>() {
 
-    private var messages: MutableList<RoomChat> = arrayListOf()
-    private lateinit var listener: OnItemRecyclerViewClick<RoomChat>
+    private var messages: MutableList<BoxChat> = arrayListOf()
+    private lateinit var listener: OnItemRecyclerViewClick<BoxChat>
     private lateinit var user: User
 
-    fun setListener(itemClickListener: OnItemRecyclerViewClick<RoomChat>) {
+    fun setListener(itemClickListener: OnItemRecyclerViewClick<BoxChat>) {
         listener = itemClickListener
     }
 
-    fun updateData(roomChat: RoomChat) {
-        this.messages.add(roomChat)
+    fun updateData(boxChat: BoxChat) {
+        messages.add(boxChat)
         notifyItemInserted(this.messages.size - Constant.DEFAULT_ONE)
     }
 
@@ -37,9 +37,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.Companion.MessagesH
         return MessagesHolder(binding, listener, user)
     }
 
-    override fun getItemCount(): Int {
-        return messages.size
-    }
+    override fun getItemCount(): Int = messages.size
 
     override fun onBindViewHolder(holder: MessagesHolder, position: Int) {
         holder.bindData(messages[position])
@@ -48,7 +46,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.Companion.MessagesH
     companion object {
         class MessagesHolder(
             private val binding: AdapterMessageBinding,
-            private val listener: OnItemRecyclerViewClick<RoomChat>,
+            private val listener: OnItemRecyclerViewClick<BoxChat>,
             private val user: User
         ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -57,17 +55,17 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.Companion.MessagesH
                 binding.root.setOnClickListener(this)
             }
 
-            private lateinit var roomChat: RoomChat
+            private lateinit var boxChat: BoxChat
 
-            fun bindData(roomChat: RoomChat) {
-                this.roomChat = roomChat
-                binding.textFriendName.text = roomChat.userFriendName
-                binding.viewModel!!.setMessage(user.id, roomChat.roomId!!)
-                binding.viewModel!!.setUser(roomChat.userFriendId!!)
+            fun bindData(boxChat: BoxChat) {
+                this.boxChat = boxChat
+                binding.textFriendName.text = boxChat.userFriendName
+                binding.viewModel!!.setMessage(user.id, boxChat.id!!)
+                binding.viewModel!!.setUser(boxChat.userFriendId!!)
             }
 
             override fun onClick(v: View?) {
-                listener.onItemClickListener(roomChat)
+                listener.onItemClickListener(boxChat)
             }
         }
     }
