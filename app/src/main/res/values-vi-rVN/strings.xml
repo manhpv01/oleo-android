@@ -51,4 +51,15 @@
     <string name="error_phone_number_exists">Số điện thoại này đã được sử dụng ! Bạn vui lòng kiểm tra lại</string>
     <string name="see_personal_info">Xem Thông Tin Cá Nhân</string>
     <string name="list_location">Danh Sách Vị Trí</string>
+    <string name="rename">Đổi tên</string>
+    <string name="unfollow">Bỏ theo dõi</string>
+    <string name="best_friend">Đánh dấu bạn thân</string>
+    <string name="unfriend">Hủy kết bạn</string>
+    <string name="block">Chặn người này</string>
+    <string name="remove_box">Xóa cuộc trò chuyện</string>
+    <string name="location_list">Danh sách vị trí</string>
+    <string name="see_personal_information">Xem thông tin cá nhân</string>
+    <string name="option">Tùy Chọn</string>
+    <string name="add_friend"> Thêm bạn</string>
+    <string name="follow">Theo dõi</string>
 </resources>

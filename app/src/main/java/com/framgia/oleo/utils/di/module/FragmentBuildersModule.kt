@@ -4,6 +4,7 @@ import com.framgia.oleo.screen.boxchat.BoxChatFragment
 import com.framgia.oleo.screen.home.HomeFragment
 import com.framgia.oleo.screen.location.LocationFragment
 import com.framgia.oleo.screen.login.LoginFragment
+import com.framgia.oleo.screen.messages.MessageOptionFragment
 import com.framgia.oleo.screen.messages.MessagesFragment
 import com.framgia.oleo.screen.search.SearchFragment
 import com.framgia.oleo.screen.setting.SettingFragment
@@ -13,6 +14,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentBuildersModule {
+
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
 
@@ -36,4 +38,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeLocationFragment(): LocationFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMessageOptionFragment(): MessageOptionFragment
 }

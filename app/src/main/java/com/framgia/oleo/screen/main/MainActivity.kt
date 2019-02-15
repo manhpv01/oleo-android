@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseActivity
 import com.framgia.oleo.databinding.ActivityMainBinding
+import com.framgia.oleo.screen.boxchat.BoxChatFragment.OnMessageOptionListener
 import com.framgia.oleo.screen.login.LoginFragment
+import com.framgia.oleo.screen.messages.MessageOptionFragment
 import com.framgia.oleo.screen.messages.MessagesFragment
 import com.framgia.oleo.screen.search.SearchFragment
 import com.framgia.oleo.screen.setting.SettingFragment.OnLogOutListener
@@ -20,12 +22,15 @@ import com.framgia.oleo.utils.extension.goBackFragment
 import com.framgia.oleo.utils.extension.replaceFragmentInActivity
 import com.framgia.oleo.utils.extension.showToast
 
-class MainActivity : BaseActivity(), MessagesFragment.OnSearchListener, OnLogOutListener {
+class MainActivity : BaseActivity(), MessagesFragment.OnSearchListener,
+    OnLogOutListener, OnMessageOptionListener {
+
     private lateinit var viewModel: MainViewModel
     private lateinit var currentFragment: Fragment
     private var isDoubleTapBack = false
     private val loginFragment = LoginFragment.newInstance()
     private val searchFragment = SearchFragment.newInstance()
+    private val messageOptionFragment = MessageOptionFragment.newInstance()
     private lateinit var inputMethodManager: InputMethodManager
     override fun onCreateView(savedInstanceState: Bundle?) {
         viewModel = MainViewModel.create(this, viewModelFactory)
@@ -75,5 +80,9 @@ class MainActivity : BaseActivity(), MessagesFragment.OnSearchListener, OnLogOut
 
     override fun onLogOutClick() {
         replaceFragmentInActivity(R.id.containerMain, loginFragment, false)
+    }
+
+    override fun onMessageOptionClick() {
+        replaceFragmentInActivity(R.id.containerMain, messageOptionFragment)
     }
 }
