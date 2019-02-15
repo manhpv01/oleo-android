@@ -41,4 +41,7 @@
     <string name="ok">Đồng ý</string>
     <string name="cancel">Hủy bỏ</string>
     <string name="validate_log_out">Bạn muốn đăng xuất?</string>
+    <string name="login_failed">Đăng nhập thất bại</string>
+    <string name="phone_number_invalid">Số điện thoại chưa đúng ! Vui lòng kiểm tra lại</string>
+    <string name="password_invalid">Mật khẩu chưa đúng ! Vui lòng kiểm tra lại</string>
 </resources>
