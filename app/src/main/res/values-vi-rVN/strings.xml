@@ -46,4 +46,5 @@
     <string name="password_invalid">Mật khẩu chưa đúng ! Vui lòng kiểm tra lại</string>
     <string name="message_result_sign_up_success">Bạn đã đăng ký thành công với tên tài khoản đăng nhập là : %s</string>
     <string name="message_please_wait">Vui lòng chờ....</string>
+    <string name="newMessage">Thêm tin nhắn Mới</string>
 </resources>
