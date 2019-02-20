@@ -47,4 +47,5 @@
     <string name="message_result_sign_up_success">Bạn đã đăng ký thành công với tên tài khoản đăng nhập là : %s</string>
     <string name="message_please_wait">Vui lòng chờ....</string>
     <string name="newMessage">Thêm tin nhắn Mới</string>
+    <string name="error_phone_number_exists">Số điện thoại này đã được sử dụng ! Bạn vui lòng kiểm tra lại</string>
 </resources>

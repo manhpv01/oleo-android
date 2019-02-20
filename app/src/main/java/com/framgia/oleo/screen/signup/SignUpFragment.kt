@@ -16,19 +16,16 @@ import com.framgia.oleo.data.source.model.User
 import com.framgia.oleo.databinding.FragmentSignupBinding
 import com.framgia.oleo.utils.Constant.MIN_CHARACTER_INPUT_PASSWORD
 import com.framgia.oleo.utils.di.Injectable
-import com.framgia.oleo.utils.extension.createDialog
-import com.framgia.oleo.utils.extension.isCheckClickableImageButtonClick
-import com.framgia.oleo.utils.extension.isCheckMultiClick
-import com.framgia.oleo.utils.extension.validInputConfirmPassword
-import com.framgia.oleo.utils.extension.validInputEmail
-import com.framgia.oleo.utils.extension.validInputPassword
-import com.framgia.oleo.utils.extension.validInputPhoneNumber
-import com.framgia.oleo.utils.extension.validInputUserName
+import com.framgia.oleo.utils.extension.*
 import com.framgia.oleo.utils.liveData.autoCleared
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_signup.buttonClose
 import kotlinx.android.synthetic.main.fragment_signup.buttonSignUp
 import kotlinx.android.synthetic.main.fragment_signup.textInputConfirmPassword
@@ -50,10 +47,11 @@ class SignUpFragment : DialogFragment(), Injectable, View.OnClickListener {
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SignUpViewModel
     private lateinit var fireBase: FirebaseAuth
+    private var isSignUp = false
 
     private var binding by autoCleared<FragmentSignupBinding>()
 
-    var onResultWhenLoginSuccess: ((message: String) -> Unit)? = null
+    var onResultWhenLoginSuccess: ((phoneNumber: String, password: String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -115,33 +113,47 @@ class SignUpFragment : DialogFragment(), Injectable, View.OnClickListener {
     }
 
     private fun onSignUp() {
-        fireBase = FirebaseAuth.getInstance()
-        val email = textInputEmail.text.toString()
-        val password = textInputPassword.text.toString()
         val progressDialog = AlertDialog.Builder(context).setView(R.layout.layout_progress_dialog).create()
-
-        fireBase.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-            activity!!
-        ) { task ->
-            if (task.isSuccessful) {
-                progressDialog.show()
-                val user = User()
-                user.email = email
-                user.userName = textInputUserName.text.toString()
-                user.phoneNumber = textInputPhoneNumber.text.toString()
-
-                FirebaseDatabase.getInstance().getReference(USER_TABLE_FIRE_BASE)
-                    .child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user)
-                    .addOnCompleteListener(activity!!) { result ->
-                        progressDialog.dismiss()
-                        if (result.isSuccessful) {
-                            onResultWhenLoginSuccess!!.invoke(textInputPhoneNumber.text.toString())
-                            dismiss()
-                        } else textMessageSignUp.text = getString(R.string.sign_up_fail)
+        progressDialog.show()
+        viewModel.getUserByPhoneNumber(textInputPhoneNumber.text.toString(), object : ValueEventListener {
+            override fun onDataChange(dataSnapShot: DataSnapshot) {
+                if (isSignUp) return
+                if (dataSnapShot.exists()) {
+                    progressDialog.dismiss()
+                    activity?.showToast(getString(R.string.error_phone_number_exists))
+                    return
+                }
+                isSignUp = true
+                viewModel.registerUser(getUser(), OnCompleteListener<Void> {
+                    progressDialog.dismiss()
+                    if (!it.isSuccessful) {
+                        activity?.showToast(getString(R.string.sign_up_fail))
+                        return@OnCompleteListener
                     }
-            } else textMessageSignUp.text = task.exception!!.message.toString()
-        }
+                    onResultWhenLoginSuccess!!.invoke(
+                        textInputPhoneNumber.text.toString(),
+                        textInputPassword.text.toString()
+                    )
+                    dismiss()
+                }, OnFailureListener {
+                    activity?.showToast(getString(R.string.sign_up_fail))
+                })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                activity?.showToast(getString(R.string.sign_up_fail))
+            }
+        })
     }
+
+    private fun getUser(): User = User(
+        textInputPhoneNumber.text.toString(),
+        textInputUserName.text.toString(),
+        textInputEmail.text.toString(),
+        textInputPhoneNumber.text.toString(),
+        "",
+        textInputPassword.text.toString()
+    )
 
     private fun onCheckTextChanged() {
         onCheckTextChangedSignUp(textLayoutUserName, textInputUserName)

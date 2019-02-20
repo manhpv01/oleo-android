@@ -92,7 +92,8 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
             R.id.textViewSignUp -> {
                 if (isCheckMultiClick()) {
                     val fragment = SignUpFragment.newInstance()
-                    fragment.onResultWhenLoginSuccess = { phoneNumber -> onResultSignUpSuccess(phoneNumber) }
+                    fragment.onResultWhenLoginSuccess =
+                        { phoneNumber, password -> onResultSignUpSuccess(phoneNumber, password) }
                     fragment.show(
                         fragmentManager, TAG_DIALOG
                     )
@@ -101,8 +102,9 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun onResultSignUpSuccess(phoneNumberSignUp: String) {
+    private fun onResultSignUpSuccess(phoneNumberSignUp: String, passwordSignUp: String) {
         binding.editTextPhoneNumber.text = Editable.Factory.getInstance().newEditable(phoneNumberSignUp)
+        binding.editTextPassword.text = Editable.Factory.getInstance().newEditable(passwordSignUp)
         Snackbar.make(
             editTextPhoneNumber,
             String.format(getString(R.string.message_result_sign_up_success), phoneNumberSignUp),
@@ -142,11 +144,11 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
                     view?.showSnackBar(getString(R.string.phone_number_invalid))
                     return
                 }
-                if (dataSnapshot.child(PASSWORD).getValue().toString() != editTextPassword.text.toString()) {
+                if (dataSnapshot.child(PASSWORD).value.toString() != editTextPassword.text.toString()) {
                     view?.showSnackBar(getString(R.string.password_invalid))
                     return
                 }
-                viewModel.insertUser(dataSnapshot.getValue(User::class.java)!!)
+                viewModel.insertUser(getUser(dataSnapshot))
                 replaceFragment(R.id.containerMain, HomeFragment.newInstance())
             }
 
@@ -154,6 +156,11 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
                 view?.showSnackBar(getString(R.string.login_failed))
             }
         })
+    }
+
+    private fun getUser(dataSnapshot: DataSnapshot): User {
+        val user = dataSnapshot.getValue(User::class.java)!!
+        return User(user.id, user.userName, user.email, user.image)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

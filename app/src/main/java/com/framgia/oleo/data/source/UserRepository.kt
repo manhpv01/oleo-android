@@ -2,6 +2,9 @@ package com.framgia.oleo.data.source
 
 import com.framgia.oleo.data.source.model.Place
 import com.framgia.oleo.data.source.model.User
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.database.ValueEventListener
 
 class UserRepository(
     private val local: UserDataSource.Local,
@@ -9,6 +12,18 @@ class UserRepository(
 ) : UserDataSource.Local, UserDataSource.Remote {
     override fun pushUserLocation(id: String, place: Place) {
         remote.pushUserLocation(id, place)
+    }
+
+    override fun registerUser(
+        user: User,
+        onCompleteListener: OnCompleteListener<Void>,
+        onFailureListener: OnFailureListener
+    ) {
+        remote.registerUser(user, onCompleteListener, onFailureListener)
+    }
+
+    override fun getUserByPhoneNumber(phoneNumber: String, valueEventListener: ValueEventListener) {
+        remote.getUserByPhoneNumber(phoneNumber, valueEventListener)
     }
 
     override fun getUser(): User {

@@ -3,6 +3,7 @@ package com.framgia.oleo.data.source.model
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
@@ -24,12 +25,25 @@ class User {
     @ColumnInfo(name = "image")
     var image: String = ""
 
+    var password = ""
+
     constructor()
 
+    @Ignore
     constructor(id: String, userName: String, email: String, image: String) {
         this.id = id
         this.userName = userName
         this.email = email
         this.image = image
+    }
+
+    @Ignore
+    constructor(id: String, userName: String, email: String, phoneNumber: String, image: String, password: String) {
+        this.id = id
+        this.userName = userName
+        this.email = email
+        this.phoneNumber = phoneNumber
+        this.image = image
+        this.password = password
     }
 }
