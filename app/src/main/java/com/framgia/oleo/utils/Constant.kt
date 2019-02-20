@@ -11,6 +11,7 @@ object Constant {
     const val PATH_STRING_USER = "User"
     const val PATH_STRING_BOX = "BoxChat"
     const val PATH_STRING_MESSAGE = "Message"
+    const val PATH_STRING_PLACE = "Place"
     const val BASE_FB_PICTURE = "http://graph.facebook.com/"
     const val PICTURE_TYPE = "/picture?type=large"
 }
