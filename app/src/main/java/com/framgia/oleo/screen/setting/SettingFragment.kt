@@ -123,6 +123,13 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
 
                 // Log test hiển thị tên vị trí người dùng
                 Log.d(ADDRESS, currentAddress.toString())
+
+                if (locationGPS != null && currentAddress != null && calendar.time != null)
+                    viewModel.pushUserLocation(
+                        locationGPS!!,
+                        currentAddress.toString(),
+                        formatter.format(calendar.time)
+                    )
             }
         }
     }
@@ -135,8 +142,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission(permissions)) enableView()
             else requestPermissions(permissions, PERMISSION_REQUEST)
-        }
-        else enableView()
+        } else enableView()
     }
 
     private fun enableView() {
@@ -164,6 +170,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
         val builder = AlertDialog.Builder(activity!!, R.style.alertDialog)
         builder.setMessage(getString(R.string.validate_log_out)).setTitle(getString(R.string.log_out))
         builder.setPositiveButton(getString(R.string.ok)) { dialog, id ->
+            if (locationManager != null) locationManager.removeUpdates(this) // remove listener location user
             signOutFacebook()
             signOutGoogle()
             viewModel.deleteUser()
@@ -234,7 +241,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
         // The minimum distance to change Updates in meters
         private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 0F
         // The minimum time between updates in milliseconds
-        private const val MIN_TIME_BW_UPDATES: Long = 1000 * 5 * 1
+        private const val MIN_TIME_BW_UPDATES: Long = 10000 * 6 * 5
 
         fun newInstance() = SettingFragment().apply {
             val bundle = Bundle()
