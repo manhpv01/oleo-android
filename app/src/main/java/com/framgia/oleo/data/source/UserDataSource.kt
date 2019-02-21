@@ -2,6 +2,9 @@ package com.framgia.oleo.data.source
 
 import com.framgia.oleo.data.source.model.Place
 import com.framgia.oleo.data.source.model.User
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.database.ValueEventListener
 
 interface UserDataSource {
     interface Local {
@@ -16,5 +19,13 @@ interface UserDataSource {
 
     interface Remote {
         fun pushUserLocation(id: String, place: Place)
+
+        fun getUserByPhoneNumber(phoneNumber: String, valueEventListener: ValueEventListener)
+
+        fun registerUser(
+            user: User,
+            onCompleteListener: OnCompleteListener<Void>,
+            onFailureListener: OnFailureListener
+        )
     }
 }
