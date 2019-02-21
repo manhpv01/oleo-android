@@ -12,6 +12,11 @@ import com.google.firebase.database.ValueEventListener
 class UserRemoteDataSource : UserDataSource.Remote {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
+    override fun getUsers(valueEventListener: ValueEventListener) {
+        firebaseDatabase.getReference(Constant.PATH_STRING_USER)
+            .addValueEventListener(valueEventListener)
+    }
+
     override fun pushUserLocation(id: String, place: Place) {
         firebaseDatabase.getReference(Constant.PATH_STRING_USER)
             .child(id)

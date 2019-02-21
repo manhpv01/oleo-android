@@ -30,7 +30,7 @@ class HomeFragment : BaseFragment(), BottomNavigationView.OnNavigationItemSelect
 
     override fun setUpView() {
         // SetUp View
-        val pagerAdapter = ViewPagerAdapter(this.fragmentManager!!)
+        val pagerAdapter = ViewPagerAdapter(childFragmentManager)
         pagerAdapter.addFragment(MessagesFragment.newInstance())
         pagerAdapter.addFragment(SettingFragment.newInstance())
         viewPager.adapter = pagerAdapter

@@ -12,20 +12,21 @@ import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseActivity
 import com.framgia.oleo.databinding.ActivityMainBinding
 import com.framgia.oleo.screen.login.LoginFragment
+import com.framgia.oleo.screen.messages.MessagesFragment
+import com.framgia.oleo.screen.search.SearchFragment
+import com.framgia.oleo.screen.setting.SettingFragment.OnLogOutListener
 import com.framgia.oleo.utils.Constant
 import com.framgia.oleo.utils.extension.goBackFragment
 import com.framgia.oleo.utils.extension.replaceFragmentInActivity
 import com.framgia.oleo.utils.extension.showToast
 
-
-class MainActivity : BaseActivity() {
-
+class MainActivity : BaseActivity(), MessagesFragment.OnSearchListener, OnLogOutListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var currentFragment: Fragment
     private var isDoubleTapBack = false
     private val loginFragment = LoginFragment.newInstance()
+    private val searchFragment = SearchFragment.newInstance()
     private lateinit var inputMethodManager: InputMethodManager
-
     override fun onCreateView(savedInstanceState: Bundle?) {
         viewModel = MainViewModel.create(this, viewModelFactory)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -47,8 +48,8 @@ class MainActivity : BaseActivity() {
             MotionEvent.ACTION_DOWN -> if (currentFocus!! is EditText) {
                 currentFocus!!.clearFocus()
                 inputMethodManager.hideSoftInputFromWindow(
-                        currentFocus!!.windowToken,
-                        InputMethodManager.HIDE_NOT_ALWAYS
+                    currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
                 )
             }
         }
@@ -66,5 +67,13 @@ class MainActivity : BaseActivity() {
         Handler().postDelayed({
             isDoubleTapBack = false
         }, Constant.MAX_TIME_DOUBLE_CLICK_EXIT.toLong())
+    }
+
+    override fun onSearchClick() {
+        replaceFragmentInActivity(R.id.containerMain, searchFragment)
+    }
+
+    override fun onLogOutClick() {
+        replaceFragmentInActivity(R.id.containerMain, loginFragment, false)
     }
 }

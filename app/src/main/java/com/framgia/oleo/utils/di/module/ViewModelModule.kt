@@ -7,6 +7,7 @@ import com.framgia.oleo.screen.login.LoginViewModel
 import com.framgia.oleo.screen.main.MainViewModel
 import com.framgia.oleo.screen.messages.MessagesViewModel
 import com.framgia.oleo.screen.boxchat.BoxChatViewModel
+import com.framgia.oleo.screen.search.SearchViewModel
 import com.framgia.oleo.screen.setting.SettingViewModel
 import com.framgia.oleo.screen.signup.SignUpViewModel
 import com.framgia.oleo.utils.di.AppViewModelFactory
@@ -54,4 +55,9 @@ abstract class ViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 }

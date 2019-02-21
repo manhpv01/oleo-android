@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
-
+    private var listener: OnLogOutListener? = null
     private lateinit var viewModel: SettingViewModel
     private var binding by autoCleared<FragmentSettingBinding>()
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -53,10 +53,23 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
         return binding.root
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnLogOutListener) {
+            listener = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
     override fun setUpView() {
         disableView()
         initCheckPermission()
         textViewLogOut.setOnClickListener(this)
+        locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     override fun bindView() {
@@ -71,7 +84,6 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
 
     private fun getLocation() {
         view!!.showSnackBar(GET_LOCATION)
-        locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         isEnabledGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         if (isEnabledGps) {
             if (checkPermission(permissions)) {
@@ -174,7 +186,7 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
             signOutFacebook()
             signOutGoogle()
             viewModel.deleteUser()
-            replaceFragment(R.id.containerMain, LoginFragment.newInstance(), false)
+            listener?.onLogOutClick()
         }
         builder.setNegativeButton(getString(R.string.cancel)) { dialog, which -> dialog.dismiss() }
         val dialog = builder.create()
@@ -201,7 +213,11 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST) {
             var allSuccess = true
@@ -223,6 +239,10 @@ class SettingFragment : BaseFragment(), View.OnClickListener, LocationListener {
                 enableView()
             }
         }
+    }
+
+    interface OnLogOutListener {
+        fun onLogOutClick()
     }
 
     companion object {
