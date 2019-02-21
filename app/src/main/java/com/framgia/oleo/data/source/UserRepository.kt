@@ -10,6 +10,11 @@ class UserRepository(
     private val local: UserDataSource.Local,
     private val remote: UserDataSource.Remote
 ) : UserDataSource.Local, UserDataSource.Remote {
+
+    override fun getUsers(valueEventListener: ValueEventListener) {
+        remote.getUsers(valueEventListener)
+    }
+
     override fun pushUserLocation(id: String, place: Place) {
         remote.pushUserLocation(id, place)
     }

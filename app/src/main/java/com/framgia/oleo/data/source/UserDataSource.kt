@@ -27,5 +27,7 @@ interface UserDataSource {
             onCompleteListener: OnCompleteListener<Void>,
             onFailureListener: OnFailureListener
         )
+
+        fun getUsers(valueEventListener: ValueEventListener)
     }
 }
