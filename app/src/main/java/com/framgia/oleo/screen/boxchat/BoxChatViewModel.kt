@@ -61,7 +61,7 @@ class BoxChatViewModel @Inject constructor(
                     val post = dataSnapshot.getValue(Message::class.java)
                     if (post != null) message.add(post)
                 }
-                adapter.updateOldData(message)
+                if (message.size != Index.POSITION_ZERO) adapter.updateOldData(message)
             }
 
             override fun onCancelled(p0: DatabaseError) {}
