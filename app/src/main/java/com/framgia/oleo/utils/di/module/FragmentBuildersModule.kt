@@ -2,6 +2,7 @@ package com.framgia.oleo.utils.di.module
 
 import com.framgia.oleo.screen.boxchat.BoxChatFragment
 import com.framgia.oleo.screen.home.HomeFragment
+import com.framgia.oleo.screen.location.LocationFragment
 import com.framgia.oleo.screen.login.LoginFragment
 import com.framgia.oleo.screen.messages.MessagesFragment
 import com.framgia.oleo.screen.search.SearchFragment
@@ -32,4 +33,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeLocationFragment(): LocationFragment
 }
