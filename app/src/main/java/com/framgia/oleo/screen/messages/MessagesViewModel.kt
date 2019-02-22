@@ -26,7 +26,7 @@ class MessagesViewModel @Inject constructor(
     fun setAdapter(messageAdapter: MessagesAdapter) {
         this.messageAdapter = messageAdapter
         if (userRepository.getUser() != null) {
-            this.messageAdapter.getUser(userRepository.getUser())
+            this.messageAdapter.getUser(userRepository.getUser()!!)
         }
     }
 
@@ -34,9 +34,10 @@ class MessagesViewModel @Inject constructor(
         val user = userRepository.getUser()
         if (user != null) {
             val databaseReference =
-                fireBaseDatabase.reference.child(Constant.PATH_STRING_USER).child(user.id)
-                    .child(Constant.PATH_STRING_BOX)
-            databaseReference.addChildEventListener(object : ChildEventListener {
+                fireBaseDatabase.reference.child(Constant.PATH_STRING_USER)
+                    .child(user.id).child(Constant.PATH_STRING_BOX)
+            databaseReference.addChildEventListener(object :
+                                                        ChildEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {}
 
                 override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {}

@@ -8,7 +8,7 @@ import com.google.firebase.database.ValueEventListener
 
 interface UserDataSource {
     interface Local {
-        fun getUser(): User
+        fun getUser(): User?
 
         fun insertUser(vararg users: User)
 

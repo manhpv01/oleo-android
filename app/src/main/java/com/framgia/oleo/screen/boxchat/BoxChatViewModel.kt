@@ -29,13 +29,13 @@ class BoxChatViewModel @Inject constructor(
 
     fun setAdapter(adapter: BoxChatAdapter) {
         this.adapter = adapter
-        this.adapter.setUser(userRepository.getUser())
+        this.adapter.setUser(userRepository.getUser()!!)
     }
 
     fun getAdapter() = adapter
 
     fun getMessage(roomId: String) {
-        messagesRepository.getMessage(user.id, roomId, object : ChildEventListener {
+        messagesRepository.getMessage(user!!.id, roomId, object : ChildEventListener {
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -54,7 +54,7 @@ class BoxChatViewModel @Inject constructor(
 
     fun loadOldMessage(roomId: String) {
         val message = arrayListOf<Message>()
-        messagesRepository.getOldMessage(user.id, roomId, oldMessageId, object : ValueEventListener {
+        messagesRepository.getOldMessage(user!!.id, roomId, oldMessageId, object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEachIndexed { index, dataSnapshot ->
                     if (index == Index.POSITION_ZERO) oldMessageId = dataSnapshot.key.toString()
@@ -69,7 +69,7 @@ class BoxChatViewModel @Inject constructor(
     }
 
     fun sendMessage(text: String, boxId: String, userFriendId: String) {
-        val messageId = messagesRepository.getMessageId(user.id, boxId)
+        val messageId = messagesRepository.getMessageId(user!!.id, boxId)
         val message = Message(messageId, user.id, text, DateFormat.getDateTimeInstance().format(Date()))
         saveMessage(user.id, boxId, messageId, message)
         saveMessage(userFriendId, boxId, messageId, message)
