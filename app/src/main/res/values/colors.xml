@@ -3,7 +3,6 @@
     <color name="colorPrimary">#384BC0</color>
     <color name="colorPrimaryDark">#5E74FF</color>
     <color name="colorAccent">#949BAD</color>
-
     <color name="colorButtonLogin">#565fd4</color>
     <color name="colorDefault">#FAFAFA</color>
     <color name="colorEditText">#bebebe</color>
@@ -21,4 +20,6 @@
     <color name="colorSettingGb">#ededfc</color>
     <color name="colorBoxChatBackground">#E1E7FC</color>
     <color name="colorMessageBackground">#5F7FF3</color>
+    <color name="colorSwitchNotification">#8983FF</color>
+    <color name="colorSwitchBlockUser">#75A5E9</color>
 </resources>

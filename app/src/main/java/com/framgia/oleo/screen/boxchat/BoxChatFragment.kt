@@ -1,9 +1,15 @@
 package com.framgia.oleo.screen.boxchat
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.framgia.oleo.R
@@ -14,7 +20,11 @@ import com.framgia.oleo.screen.main.MainActivity
 import com.framgia.oleo.utils.Index
 import com.framgia.oleo.utils.extension.goBackFragment
 import com.framgia.oleo.utils.liveData.autoCleared
-import kotlinx.android.synthetic.main.fragment_boxchat.*
+import kotlinx.android.synthetic.main.fragment_boxchat.buttonSend
+import kotlinx.android.synthetic.main.fragment_boxchat.editSendMessage
+import kotlinx.android.synthetic.main.fragment_boxchat.recyclerViewBoxChat
+import kotlinx.android.synthetic.main.fragment_boxchat.swipeRefreshBoxChat
+import kotlinx.android.synthetic.main.fragment_boxchat.toolbarBoxChat
 
 class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
 
@@ -23,6 +33,7 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
     private lateinit var boxChat: BoxChat
     private lateinit var adapter: BoxChatAdapter
     private lateinit var recyclerView: RecyclerView
+    private var onMessageOptionListener: OnMessageOptionListener? = null
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel = BoxChatViewModel.create(this, viewModelFactory)
@@ -30,6 +41,16 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
         return binding.root
+    }
+
+    override fun onAttach(context: Context?) {
+        if (context is OnMessageOptionListener) onMessageOptionListener = context
+        super.onAttach(context)
+    }
+
+    override fun onDetach() {
+        onMessageOptionListener = null
+        super.onDetach()
     }
 
     override fun setUpView() {
@@ -40,6 +61,7 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
         adapter = BoxChatAdapter()
         recyclerView = recyclerViewBoxChat
         recyclerView.adapter = adapter
+
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
@@ -65,12 +87,13 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        menu!!.findItem(R.id.newMessage).setIcon(R.drawable.ic_more_vert_black_24dp)
+        inflater?.inflate(R.menu.option_message, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             android.R.id.home -> (activity!! as MainActivity).goBackFragment()
+            R.id.menu_option -> onMessageOptionListener?.onMessageOptionClick()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -104,6 +127,10 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
             buttonSend.isEnabled = false
             buttonSend.setBackgroundResource(R.drawable.ic_sent_message_disable)
         }
+    }
+
+    interface OnMessageOptionListener {
+        fun onMessageOptionClick()
     }
 
     companion object {

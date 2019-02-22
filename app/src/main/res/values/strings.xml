@@ -50,4 +50,15 @@
     <string name="error_phone_number_exists">The phone number is exists</string>
     <string name="see_personal_info">See personal information</string>
     <string name="list_location">List Location</string>
+    <string name="rename">Rename</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="best_friend">Best friend</string>
+    <string name="location_list">Location list</string>
+    <string name="unfriend">UnFriend</string>
+    <string name="block">Block</string>
+    <string name="remove_box">Remove box</string>
+    <string name="see_personal_information">See personal information</string>
+    <string name="option">Option</string>
+    <string name="add_friend"> Add friend</string>
+    <string name="follow">Follow</string>
 </resources>

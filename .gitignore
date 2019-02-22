@@ -36,3 +36,4 @@ build
 local.properties
 /gradlew.bat
 google-services.json
+.editorconfig
