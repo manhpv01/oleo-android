@@ -87,3 +87,10 @@ fun AppCompatActivity.switchFragment(@IdRes containerId: Int, currentFragment: F
         }
     }, animateType = animateType)
 }
+
+fun AppCompatActivity.clearAllFragment() {
+    for (i in 0 until supportFragmentManager!!.backStackEntryCount) {
+        supportFragmentManager!!.popBackStack()
+    }
+}
+

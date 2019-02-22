@@ -81,14 +81,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun insertUser(user: User) {
-        if (userRepository.getUser() == null) {
-            userRepository.insertUser(user)
-        } else {
-            if (userRepository.getUser().id != user.id && user != null) {
-                userRepository.deleteUser()
-                userRepository.insertUser(user)
-            }
-        }
+        userRepository.insertUser(user)
     }
 
     fun signInWithPhoneNumber(

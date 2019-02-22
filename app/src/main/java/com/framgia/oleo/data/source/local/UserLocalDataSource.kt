@@ -6,7 +6,7 @@ import com.framgia.oleo.data.source.model.User
 
 class UserLocalDataSource(private val userDAO: UserDAO) : UserDataSource.Local {
 
-    override fun getUser(): User {
+    override fun getUser(): User? {
         return userDAO.getUser
     }
 

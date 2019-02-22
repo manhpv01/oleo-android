@@ -31,7 +31,7 @@ class UserRepository(
         remote.getUserByPhoneNumber(phoneNumber, valueEventListener)
     }
 
-    override fun getUser(): User {
+    override fun getUser(): User? {
         return local.getUser()
     }
 
