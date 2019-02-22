@@ -16,7 +16,7 @@ import com.framgia.oleo.databinding.FragmentMessagesBinding
 import com.framgia.oleo.screen.boxchat.BoxChatFragment
 import com.framgia.oleo.screen.main.MainActivity
 import com.framgia.oleo.utils.OnItemRecyclerViewClick
-import com.framgia.oleo.utils.extension.addFragment
+import com.framgia.oleo.utils.extension.addFragmentToActivity
 import com.framgia.oleo.utils.liveData.autoCleared
 import kotlinx.android.synthetic.main.fragment_messages.recyclerViewMessages
 import kotlinx.android.synthetic.main.fragment_messages.textSearchMessage
@@ -70,7 +70,8 @@ class MessagesFragment : BaseFragment(), OnItemRecyclerViewClick<BoxChat>, View.
 
     override fun onItemClickListener(data: BoxChat) {
         //Open Chat Screen
-        addFragment(R.id.containerMain, BoxChatFragment.newInstance(data))
+        (activity!! as MainActivity).addFragmentToActivity(R.id.containerMain, BoxChatFragment
+            .newInstance(data))
     }
 
     override fun onClick(v: View?) {

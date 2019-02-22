@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import com.framgia.oleo.data.source.local.dao.UserDatabase
 import com.framgia.oleo.data.source.local.dao.UserDatabase.Companion.DATABASE_NAME
+import com.framgia.oleo.data.source.remote.MesssagesRemoteDataSource
 import com.framgia.oleo.data.source.remote.api.middleware.BooleanAdapter
 import com.framgia.oleo.data.source.remote.api.middleware.DoubleAdapter
 import com.framgia.oleo.data.source.remote.api.middleware.IntegerAdapter
@@ -36,6 +37,12 @@ class AppModule {
         return Room.databaseBuilder(application.applicationContext, UserDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration().allowMainThreadQueries()
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMesssagesRemoteDataSource(): MesssagesRemoteDataSource {
+        return MesssagesRemoteDataSource.newInstance()
     }
 
     @Singleton
