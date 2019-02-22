@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.framgia.oleo.R
 import com.framgia.oleo.base.BaseFragment
 import com.framgia.oleo.data.source.model.BoxChat
@@ -34,6 +35,7 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
     private lateinit var adapter: BoxChatAdapter
     private lateinit var recyclerView: RecyclerView
     private var onMessageOptionListener: OnMessageOptionListener? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel = BoxChatViewModel.create(this, viewModelFactory)
@@ -60,15 +62,18 @@ class BoxChatFragment : BaseFragment(), TextWatcher, View.OnClickListener {
         (activity as MainActivity).supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_black_24dp)
         adapter = BoxChatAdapter()
         recyclerView = recyclerViewBoxChat
+        swipeRefreshLayout = swipeRefreshBoxChat
         recyclerView.adapter = adapter
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
+                swipeRefreshLayout.isEnabled = true
                 if (positionStart != Index.POSITION_ZERO)
                     recyclerView.smoothScrollToPosition(adapter.itemCount)
             }
         })
+        swipeRefreshLayout.isEnabled = false
         viewModel.setAdapter(adapter)
         swipeRefreshBoxChat.setOnRefreshListener {
             viewModel.loadOldMessage(boxChat.id!!)
