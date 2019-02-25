@@ -29,5 +29,17 @@ interface UserDataSource {
         )
 
         fun getUsers(valueEventListener: ValueEventListener)
+
+        fun followUser(
+            user: User,
+            onCompleteListener: OnCompleteListener<Void>,
+            onFailureListener: OnFailureListener
+        )
+
+        fun unfollowUser(
+            user: User,
+            onCompleteListener: OnCompleteListener<Void>,
+            onFailureListener: OnFailureListener
+        )
     }
 }

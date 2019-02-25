@@ -62,4 +62,8 @@
     <string name="option">Tùy Chọn</string>
     <string name="add_friend"> Thêm bạn</string>
     <string name="follow">Theo dõi</string>
+    <string name="message_unfollow_success">Bỏ theo dõi thành công</string>
+    <string name="message_unfollow_fail">Bỏ theo dõi thất bại. Bạn vui lòng thử lại sau !</string>
+    <string name="message_follow_success">Bạn đã đăng ký theo dõi người dùng này. Vui lòng đợi phản hồi từ họ!</string>
+    <string name="message_follow_fail">Bạn không thể theo dõi người này. Vui lòng thử lại sau !</string>
 </resources>

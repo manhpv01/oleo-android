@@ -46,4 +46,20 @@ class UserRepository(
     override fun updateUser(vararg users: User) {
         return local.updateUser(*users)
     }
+
+    override fun followUser(
+        user: User,
+        onCompleteListener: OnCompleteListener<Void>,
+        onFailureListener: OnFailureListener
+    ) {
+        remote.followUser(user, onCompleteListener, onFailureListener)
+    }
+
+    override fun unfollowUser(
+        user: User,
+        onCompleteListener: OnCompleteListener<Void>,
+        onFailureListener: OnFailureListener
+    ) {
+        remote.unfollowUser(user, onCompleteListener, onFailureListener)
+    }
 }

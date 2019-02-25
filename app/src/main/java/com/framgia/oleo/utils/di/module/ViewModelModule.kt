@@ -9,6 +9,7 @@ import com.framgia.oleo.screen.messages.MessagesViewModel
 import com.framgia.oleo.screen.boxchat.BoxChatViewModel
 import com.framgia.oleo.screen.search.SearchViewModel
 import com.framgia.oleo.screen.location.LocationViewModel
+import com.framgia.oleo.screen.messages.MessageOptionViewModel
 import com.framgia.oleo.screen.setting.SettingViewModel
 import com.framgia.oleo.screen.signup.SignUpViewModel
 import com.framgia.oleo.utils.di.AppViewModelFactory
@@ -19,6 +20,7 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class ViewModelModule {
+
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
@@ -66,4 +68,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MessageOptionViewModel::class)
+    abstract fun bindMessageOptionViewModel(messageOptionViewModel: MessageOptionViewModel): ViewModel
 }

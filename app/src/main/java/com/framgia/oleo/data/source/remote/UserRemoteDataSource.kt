@@ -42,4 +42,32 @@ class UserRemoteDataSource : UserDataSource.Remote {
             .addOnCompleteListener(onCompleteListener)
             .addOnFailureListener(onFailureListener)
     }
+
+    override fun followUser(
+        user: User,
+        onCompleteListener: OnCompleteListener<Void>,
+        onFailureListener: OnFailureListener
+    ) {
+        firebaseDatabase.getReference(Constant.PATH_STRING_USER)
+            .child(user.id)
+            .child("follower")
+            .child("waiting")
+            .setValue(user)
+            .addOnCompleteListener(onCompleteListener)
+            .addOnFailureListener(onFailureListener)
+    }
+
+    override fun unfollowUser(
+        user: User,
+        onCompleteListener: OnCompleteListener<Void>,
+        onFailureListener: OnFailureListener
+    ) {
+        firebaseDatabase.getReference(Constant.PATH_STRING_USER)
+            .child(user.id)
+            .child(Constant.PATH_FOLLOWER)
+            .child(Constant.PATCH_FOLLOWER_WAITING)
+            .removeValue()
+            .addOnCompleteListener(onCompleteListener)
+            .addOnFailureListener(onFailureListener)
+    }
 }

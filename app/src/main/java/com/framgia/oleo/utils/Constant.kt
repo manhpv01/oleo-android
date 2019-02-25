@@ -14,4 +14,6 @@ object Constant {
     const val PATH_STRING_PLACE = "Place"
     const val BASE_FB_PICTURE = "http://graph.facebook.com/"
     const val PICTURE_TYPE = "/picture?type=large"
+    const val PATH_FOLLOWER = "follower"
+    const val PATCH_FOLLOWER_WAITING = "waiting"
 }

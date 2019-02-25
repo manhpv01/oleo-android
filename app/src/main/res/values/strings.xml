@@ -61,4 +61,8 @@
     <string name="option">Option</string>
     <string name="add_friend"> Add friend</string>
     <string name="follow">Follow</string>
+    <string name="message_unfollow_success">UnFollow success</string>
+    <string name="message_unfollow_fail">UnFollow failed. Please try again !</string>
+    <string name="message_follow_success">You have subscribed to follow this user. Please wait for feedback from that user !</string>
+    <string name="message_follow_fail">Follow failed. Please try again !</string>
 </resources>
